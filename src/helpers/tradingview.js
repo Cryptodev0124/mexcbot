@@ -1,17 +1,17 @@
 const TradingView = require("@mathieuc/tradingview");
 
-const init = (chartCallback, indicatorCallback) => {
+const init = (chartCallback, indicatorCallback, symbol) => {
     // Init Tradinvview chart
     const tradingviewClient = new TradingView.Client({
         token: '9pqho8st4hywlau4grmgzfgown35016a',
         signature: 'v1:SIYChkLZYSrK592VRv0TVHvQTQZZgmdmGpAPu6NirCA='
     }); // Creates a websocket client
     const chart = new tradingviewClient.Session.Chart(); // Init a Chart session
-    chart.setMarket('MEXC:PEPEUSDT.P', { // Set the market
+    chart.setMarket('MEXC:' + symbol, { // Set the market
         timeframe: '15',
         range: 1000
     });
-    console.log("chart", chart.infos.description);
+    // console.log("chart", chart.infos.description);
 
     const INDICATOR_NAME = "DCA Bot Emulation Indicator";
     

@@ -62,6 +62,7 @@ app.post('/trade', async (req, res) => {
   const main = async (chart) => {
     // console.log(chart.periods[0])
     latestPrice = chart.periods[0].close;
+    console.log("latestPrice", latestPrice);
     if (!isReady) return;
     isReady = false;
     const res = await readClient.OpenPositions();
@@ -70,7 +71,7 @@ app.post('/trade', async (req, res) => {
     var action_tag = 0;
     if (res.data.success) {
       const positions = res.data.data;
-      console.log("positions", res.data);
+      console.log("positions", positions);
       // const orders = history.data.data;
       const main_position = positions.filter(position => position.positionType == (STRATEGY == 1 ? 1 : 2) && position.symbol == MARKET_SYMBOL)[0];
       console.log("mainPosition", main_position);
@@ -202,7 +203,7 @@ app.post('/trade', async (req, res) => {
     console.log(`V1.0 long Bot == eth => ${latestPrice?.toFixed(2)}$, entry => ${info.entryPrice?.toFixed(2)}, threshold is ${(info.entryPrice * (1 - STRATEGY * PRICE_DERIVATION)).toFixed(2)}, ${(info.entryPrice * (1 - STRATEGY * PRICE_DERIVATION / ASSIST_RATE)).toFixed(2)}, ${(info.entryPrice * (1 + STRATEGY * TAKE_PROFIT)).toFixed(2)}, amount is ${info.amount}, trend is ${direction}`);
   }
   info = readFromStorage('info');
-  tradingviewInit(main, setDirection);
+  tradingviewInit(main, setDirection, MARKET_SYMBOL);
   setInterval(() => {
     displayCurrentBotStatus();
   }, 60000);
