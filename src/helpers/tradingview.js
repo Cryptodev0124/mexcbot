@@ -11,6 +11,7 @@ const init = (chartCallback, indicatorCallback) => {
         timeframe: '15',
         range: 1000
     });
+    console.log("chart", chart.infos.description);
 
     const INDICATOR_NAME = "DCA Bot Emulation Indicator";
     
