@@ -1,0 +1,106 @@
+/*! *****************************************************************************
+Copyright (c) Microsoft Corporation.
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+PERFORMANCE OF THIS SOFTWARE.
+***************************************************************************** */
+
+/*! exports provided: Animation */
+
+/*! exports provided: AnimationInstance */
+
+/*! exports provided: Dispatcher */
+
+/*! exports provided: DudaAnimationManager */
+
+/*! exports provided: Engine */
+
+/*! exports provided: Engine, Trigger, Driver, ANIMATION_COMPOSITION_TYPE, ANIM_DATA_ATTR, MASTER_DEFAULT_OPTIONS, SUPPORTED_TRANSFORM_PROPERTIES */
+
+/*! exports provided: SceneEngine */
+
+/*! exports provided: StyleManipulator */
+
+/*! exports provided: Timeline */
+
+/*! exports provided: isElementInViewport, getScrollParent, getDocumentScrollingElement, getElementOriginalBoundingRect, getUniqueName, getAsArray, isFunction, isString, isObject, getValue, isUndefined */
+
+/*! exports provided: registerEffects */
+
+/*! no static exports found */
+
+/*!***********************!*\
+  !*** ./src/Engine.js ***!
+  \***********************/
+
+/*!************************!*\
+  !*** ./src/helpers.js ***!
+  \************************/
+
+/*!*************************!*\
+  !*** ./src/Timeline.js ***!
+  \*************************/
+
+/*!**************************!*\
+  !*** ./src/Animation.js ***!
+  \**************************/
+
+/*!**************************!*\
+  !*** ./src/constants.js ***!
+  \**************************/
+
+/*!**************************!*\
+  !*** external "scenejs" ***!
+  \**************************/
+
+/*!***************************!*\
+  !*** ./src/Dispatcher.js ***!
+  \***************************/
+
+/*!****************************!*\
+  !*** ./src/SceneEngine.js ***!
+  \****************************/
+
+/*!****************************!*\
+  !*** ./src/index-scene.js ***!
+  \****************************/
+
+/*!******************************!*\
+  !*** external "lodash.trim" ***!
+  \******************************/
+
+/*!*********************************!*\
+  !*** ./src/StyleManipulator.js ***!
+  \*********************************/
+
+/*!*********************************!*\
+  !*** ./src/built-in-effects.js ***!
+  \*********************************/
+
+/*!**********************************!*\
+  !*** ./src/AnimationInstance.js ***!
+  \**********************************/
+
+/*!***********************************!*\
+  !*** (webpack)/buildin/global.js ***!
+  \***********************************/
+
+/*!***********************************!*\
+  !*** external "lodash.clonedeep" ***!
+  \***********************************/
+
+/*!*************************************!*\
+  !*** ./src/DudaAnimationManager.js ***!
+  \*************************************/
+
+/*!*********************************************************************************!*\
+  !*** /home/runner/work/client/client/node_modules/lodash.intersection/index.js ***!
+  \*********************************************************************************/

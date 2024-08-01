@@ -1,0 +1,56 @@
+{
+  "name": "pages",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "engines": {
+    "node": ">=12.22.3",
+    "npm": ">=6.14.13"
+  },
+  "keywords": [
+    "Mexc",
+    "API"
+  ],
+  "author": "Nl",
+  "license": "MIT",
+  "devDependencies": {
+    "@mathieuc/tradingview": "^3.4.2",
+    "bluebird": "^3.3.1",
+    "clean-jsdoc-theme": "^3.2.7",
+    "config": "^1.28.1",
+    "crypto": "^1.0.1",
+    "crypto-js": "^3.1.9-1",
+    "fs": "^0.0.1-security",
+    "husky": "^6.0.0",
+    "jest": "^26.0.1",
+    "jsdoc": "^3.6.7",
+    "marked": "^4.0.12",
+    "moment": "^2.13.0",
+    "nock": "^13.0.2",
+    "pako": "^1.0.6",
+    "path": "^0.12.7",
+    "readline": "^1.3.0",
+    "redis": "^2.4.2",
+    "request": "^2.72.0",
+    "standard": "^16.0.4"
+  },
+  "files": [
+    "src/**/*"
+  ],
+  "execMap": {
+    "js": "node –harmony"
+  },
+  "dependencies": {
+    "axios": "^1.6.7",
+    "body-parser": "^1.20.2",
+    "crypto": "^1.0.1",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "prebuilt-tdlib": "^0.1008028.0",
+    "tdl": "^7.4.1",
+    "tradingview-technical-analysis": "^1.0.1"
+  }
+}

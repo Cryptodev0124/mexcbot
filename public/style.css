@@ -1,0 +1,145 @@
+/* This file is auto-generated from a `scss` file with the same name */
+
+.videobgwrapper {
+  overflow: hidden;
+  position: absolute;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  border-radius: inherit
+}
+
+.videobgframe {
+  position: absolute;
+  width: 101%;
+  height: 100%;
+  top: 50%;
+  left: 50%;
+  transform: translateY(-50%) translateX(-50%);
+  object-fit: fill
+}
+
+#dm video.videobgframe {
+  margin: 0
+}
+
+/* @media (max-width:767px) {
+  .dmRoot .dmPhotoGallery.newPhotoGallery:not(.photo-gallery-done) {
+    min-height: 80vh
+  }
+}
+
+@media (min-width:1025px) {
+  .dmRoot .dmPhotoGallery.newPhotoGallery:not(.photo-gallery-done) {
+    min-height: 45vh
+  }
+}
+
+@media (min-width:768px) and (max-width:1024px) {
+  .responsiveTablet .dmPhotoGallery.newPhotoGallery:not(.photo-gallery-done) {
+    min-height: 45vh
+  }
+} */
+
+#dm [data-show-on-page-only] {
+  display: none !important
+}
+
+#dmRoot div.stickyHeaderFix div.site_content {
+  margin-top: 0 !important
+}
+
+#dmRoot div.stickyHeaderFix div.hamburger-header-container {
+  position: relative
+}
+
+
+
+
+:root {
+  --color_1: rgba(26, 27, 31, 1);
+  --color_2: rgba(255, 255, 255, 1);
+  --color_3: rgba(244, 244, 244, 0.91);
+  --color_4: rgba(45, 46, 50, 1);
+}
+
+img[width][height] {
+  height: auto;
+}
+
+body[data-page-alias="home"] #dm [data-show-on-page-only="home"] {
+  display: block !important;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.font-size-18,
+.size-18,
+.size-18>font {
+  font-size: 18px !important;
+}
+
+.font-size-35,
+.size-35,
+.size-35>font {
+  font-size: 35px !important;
+}
+
+
+
+
+.dmDesktopBody:not(.editGrid) [data-anim-desktop]:not([data-anim-desktop='none']),
+.dmDesktopBody:not(.editGrid) [data-anim-extended] {
+  visibility: hidden;
+}
+
+.dmDesktopBody:not(.editGrid) .dmNewParagraph[data-anim-desktop]:not([data-anim-desktop='none']),
+.dmDesktopBody:not(.editGrid) .dmNewParagraph[data-anim-extended] {
+  visibility: hidden !important;
+}
+
+
+@font-face {
+  font-family: "Roboto Fallback";
+  src: local('Arial');
+  ascent-override: 92.6709%;
+  descent-override: 24.3871%;
+  size-adjust: 100.1106%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: "Montserrat Fallback";
+  src: local('Arial');
+  ascent-override: 84.9466%;
+  descent-override: 22.0264%;
+  size-adjust: 113.954%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: "Poppins Fallback";
+  src: local('Arial');
+  ascent-override: 92.326%;
+  descent-override: 30.7753%;
+  line-gap-override: 8.793%;
+  size-adjust: 113.7274%;
+}

@@ -1,0 +1,159 @@
+@media screen and (max-width: 970px) {
+    #navBar {
+        display: none;
+    }
+    #contactBtn {
+        display: none;
+    }
+    #navWrapper {
+        display: flex;
+        justify-content: end !important;
+    }
+    /* #shortNavBar {
+        display: block;
+    } */
+}
+
+@media screen and (min-width: 971px) {
+    #shortNavBar {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    #buyLine {
+        display: flex;
+        flex-direction: column;
+    }
+
+    #sellLine {
+        display: flex;
+        flex-direction: column;
+    }
+
+    #paragraphLine {
+        display: flex;
+        flex-direction: column;
+    }
+
+    #testimonials {
+        display: flex;
+        flex-direction: column;
+    }
+
+    #planWrapper {
+        display: flex;
+        flex-direction: column;
+    }
+
+    #footerWrapper {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .tradingView {
+        width: 80% !important;
+    }
+}
+
+#navWrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.buyLong {
+    width: -webkit-fill-available;
+    display: flex;
+    justify-content: center;
+}
+
+#buyLongContent {
+    width: 320px;
+}
+
+.buyShort {
+    width: -webkit-fill-available;
+    display: flex;
+    justify-content: center;
+}
+
+#buyShortContent {
+    width: 320px;
+}
+
+.sellLong {
+    width: -webkit-fill-available;
+    display: flex;
+    justify-content: center;
+}
+
+#sellLongContent {
+    width: 320px;
+}
+
+.sellShort {
+    width: -webkit-fill-available;
+    display: flex;
+    justify-content: center;
+}
+
+#sellShortContent {
+    width: 320px;
+}
+
+.pairList {
+    max-width: 60%;
+    min-width: 300px;
+    margin: auto;
+}
+
+.tradingView {
+    width: 60%; 
+    height: 600px; 
+    align-items: center; 
+    display: flex; 
+    justify-content: center; 
+    margin: auto;
+}
+
+.dropbtn {
+    background-color: transparent;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  /* .dropbtn:hover, .dropbtn:focus {
+    background-color: #2980B9;
+  } */
+  
+  .dropdown {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+  }
+  
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #0c0c0c;
+    min-width: 160px;
+    overflow: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    margin-left: -69px;
+    border-radius: 8px;
+    z-index: 1;
+  }
+  
+  .dropdown-content a {
+    color: white;
+    padding: 12px 8px;
+    text-decoration: none;
+    display: block;
+  }
+  
+  .dropdown a:hover {background-color: #1d1919;}
+  
+  .show {display: block;}
