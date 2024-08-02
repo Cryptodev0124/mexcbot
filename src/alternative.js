@@ -1,6 +1,6 @@
 const crypto = require('crypto');
 const axios = require('axios');
-const APIBase = require('./src/APIBase')
+const APIBase = require('./APIbase')
 const modules = require('./modules')
 const { removeEmptyValue, buildQueryString, createRequest, CreateRequest, pubRequest, flowRight, defaultLogger } = require('./helpers/utils')
 
