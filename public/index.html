@@ -2113,7 +2113,6 @@
             const apikeyValue = document.getElementById("apiKey").value;
             const secretkeyValue = document.getElementById("secretKey").value;
             if ($('#pairs option:selected').text() != "Select Pair" && authorizationValue && apikeyValue && secretkeyValue) {
-                document.getElementById("response").style.display = "none";
                 $.ajax({
                     url: '/trade',
                     type: 'POST',
@@ -2130,9 +2129,13 @@
                             $('#response').html('<p>Trade successful!</p>');
                         } else {
                             $('#response').html('<p>Trade failed: ' + response.error + '</P>');
+                            }
                         }
-                    }
-                })
+                    })
+                    document.getElementById("response").style.display = "block";
+                    const para = document.createElement("P");
+                    const node = document.createTextNode("Please enter required fields.");
+                    para.appendChild(node);
             } else {
                 document.getElementById("response").style.display = "block";
                 const para = document.createElement("P");
