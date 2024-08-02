@@ -29,11 +29,31 @@ class Future extends flowRight(...Object.values(modules))(APIBase) {
   }
 
   SignRequest(method, path, params = {}) {
+    console.log('signing here', path);
+    const regex = /{([^}]+)}/g;
+    const matches = [...path.matchAll(regex)];
+    const extractedStrings = matches.map(match => match[1]);
+    for (let i = 0; i < extractedStrings.length; i++) {
+      const str = extractedStrings[i];
+      path = path.replaceAll('{' + str + '}', params[str] ?? '');
+      delete params[str];
+    }
     params = removeEmptyValue(params)
     const timestamp = new Date().getTime();
     const partialHash = crypto.createHash('md5').update(this.apiKey + timestamp.toString()).digest('hex').substring(7);
-    const paramStr = JSON.stringify(params);
-    const Signature = crypto.createHash('md5').update(timestamp.toString() + paramStr + partialHash).digest('hex');
+    let objectString = '';
+    if (method === 'POST') {
+      path = `${path}`
+      objectString += JSON.stringify(params)
+    } else {
+      let queryString = buildQueryString({ ...params })
+      // path = `${path}?${queryString}`
+      // Modified by sam 2024-03-09
+      path = `${path}?`
+      objectString += queryString
+    }
+
+    const Signature = crypto.createHash('md5').update(timestamp.toString() + objectString + partialHash).digest('hex');
     const headers = {
       "x-mxc-nonce": timestamp.toString(),
       "x-mxc-sign": Signature,
@@ -43,7 +63,8 @@ class Future extends flowRight(...Object.values(modules))(APIBase) {
       "origin": "https://futures.mexc.com",
       "referer": "https://futures.mexc.com/exchange",
     };
-    return axios.post(this.baseURL + path, paramStr, { headers });
+
+    return axios.post(this.baseURL + path, params, { headers });
   }
 
 

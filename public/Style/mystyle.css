@@ -54,11 +54,65 @@
     .tradingView {
         width: 80% !important;
     }
+
+    .entryLine {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .pairList {
+        margin-right: 0px !important;
+        margin-bottom: 15px;
+    }
+
+    #apiKey {
+        margin-right: 0px !important;
+        margin-bottom: 15px;
+    }
 }
 
 #navWrapper {
     display: flex;
     justify-content: center;
+}
+
+#response {
+    max-width: 40%;
+    min-width: 300px;
+    margin: auto;
+}
+
+#response p {
+    text-align: center;
+    border: 1px solid #1db6e8;
+    padding: 15px;
+    border-radius: 8px;
+    background: #ef3d3d;
+}
+
+.entryPart {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.entryLine {
+    display: flex;
+    margin-bottom: 15px;
+}
+
+#apiKey {
+    margin-right: 4px;
+}
+
+.inputField {
+    min-width: 300px;
+    max-width: 50%;
+    margin: auto;
+    padding: 5px 5px 5px 20px;
+    border: 1px solid;
+    height: 49px;
 }
 
 .buyLong {
@@ -102,9 +156,11 @@
 }
 
 .pairList {
-    max-width: 60%;
+    max-width: 50%;
     min-width: 300px;
-    margin: auto;
+    margin-right: 4px;
+    padding: 5px;
+    border: 1px solid;
 }
 
 .tradingView {

@@ -163,7 +163,7 @@ app.post('/trade', async (req, res) => {
       }
       if (action != undefined) {
         console.log('================== CREATED NEW ORDER =================');
-        console.log(action.data, action_tag);
+        // console.log(action.data, action_tag);
         if (action.data.message == "Request frequently too fast!" && action_tag == 2) {
           setTimeout(() => {
             if (assist_position) {

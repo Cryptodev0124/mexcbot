@@ -82,8 +82,7 @@
                                                                                 src="./Resources/images/blank_logo-vif%202.svg"
                                                                                 id="1359157006" class=""
                                                                                 data-dm-image-path="/Resources/images/blank_logo-vif%202.svg"
-                                                                                width="173" height="52"
-                                                                                 /></a>
+                                                                                width="173" height="52" /></a>
                                                                     </div>
                                                                 </div>
                                                                 <div class="u_1068781528 dmRespCol small-12 large-8 medium-8"
@@ -288,8 +287,7 @@
                                                                             <img src="./Resources/images/Vector%201.svg"
                                                                                 id="1259379824" class=""
                                                                                 data-dm-image-path="./Resources/images/Vector%201.svg"
-                                                                                width="8872" height="1035"
-                                                                                 />
+                                                                                width="8872" height="1035" />
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -321,14 +319,23 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="pairList">
-                                                                <select name="pairs" id="pairs"
-                                                                    onchange="changedPair()">
-                                                                    <option value="BINANCE:SOLUSDT|1M">Select Pair</option>
-                                                                    <option value="BINANCE:SOLUSDT|1M">SOLUSDT</option>
-                                                                    <option value="BINANCE:ETHUSDT|1M">ETHUSDT</option>
-                                                                    <option value="COINBASE:BTCUSD|1M">BTCUSDT</option>
-                                                                </select>
+                                                            <div class="entryPart">
+                                                                <div class="entryLine">
+                                                                    <div class="pairList" id="pairList">
+                                                                        <select name="pairs" id="pairs"
+                                                                            onchange="changedPair()">
+                                                                            <option value="Select Pair">Select Pair</option>
+                                                                            <option value="BINANCE:SOLUSDT|1M">SOL_USDT</option>
+                                                                            <option value="BINANCE:ETHUSDT|1M">ETH_USDT</option>
+                                                                            <option value="COINBASE:BTCUSD|1M">BTC_USDT</option>
+                                                                        </select>
+                                                                    </div>
+                                                                    <input id="authorization" class="inputField" placeholder="YOUR AUTHORIZATION" />
+                                                                </div>
+                                                                <div class="entryLine">
+                                                                    <input id="apiKey" class="inputField" placeholder="YOUR API KEY" />
+                                                                    <input id="secretKey" class="inputField" placeholder="YOUR SECRET KEY" />
+                                                                </div>
                                                             </div>
                                                             <!-- TradingView Widget BEGIN -->
                                                             <div class="tradingView">
@@ -346,7 +353,7 @@
                                                                 </div>
                                                             </div>
                                                             <!-- TradingView Widget END -->
-                                                             <div id="response"></div>
+                                                            <div id="response"></div>
                                                             <div class="u_1502713449 dmRespRow"
                                                                 style="text-align: center;" id="1502713449" mode="1">
                                                                 <div class="dmRespColsWrapper" id="buyLine">
@@ -387,13 +394,12 @@
                                                                                     class="u_1776899051 align-center dmButtonLink dmWidget dmWwr default dmOnlyButton dmDefaultGradient flexButton"
                                                                                     file="false"
                                                                                     data-element-type="dButtonLinkId"
-                                                                                    id="1776899051" 
+                                                                                    id="1776899051"
                                                                                     onclick="sendData(6, 1)"
-                                                                                    data-target-page-alias="home"> 
-                                                                                    <span
-                                                                                        class="iconBg"
+                                                                                    data-target-page-alias="home">
+                                                                                    <span class="iconBg"
                                                                                         aria-hidden="true"
-                                                                                        id="1153527885"> 
+                                                                                        id="1153527885">
                                                                                         <span
                                                                                             class="icon hasFontIcon icon-star"
                                                                                             id="1358008942">
@@ -406,7 +412,7 @@
                                                                                     class="u_1776899051 align-center dmButtonLink dmWidget dmWwr default dmOnlyButton dmDefaultGradient flexButton"
                                                                                     file="false"
                                                                                     data-element-type="dButtonLinkId"
-                                                                                    id="1776899051" 
+                                                                                    id="1776899051"
                                                                                     onclick="sendData(25, 1)"
                                                                                     data-target-page-alias="home"> <span
                                                                                         class="iconBg"
@@ -422,7 +428,7 @@
                                                                                     class="u_1776899051 align-center dmButtonLink dmWidget dmWwr default dmOnlyButton dmDefaultGradient flexButton"
                                                                                     file="false"
                                                                                     data-element-type="dButtonLinkId"
-                                                                                    id="1776899051" 
+                                                                                    id="1776899051"
                                                                                     onclick="sendData(65, 1)"
                                                                                     data-target-page-alias="home"> <span
                                                                                         class="iconBg"
@@ -438,7 +444,7 @@
                                                                                     class="u_1776899051 align-center dmButtonLink dmWidget dmWwr default dmOnlyButton dmDefaultGradient flexButton"
                                                                                     file="false"
                                                                                     data-element-type="dButtonLinkId"
-                                                                                    id="1776899051" 
+                                                                                    id="1776899051"
                                                                                     onclick="sendData(100, 1)"
                                                                                     data-target-page-alias="home"> <span
                                                                                         class="iconBg"
@@ -881,8 +887,7 @@
                                                                                 src="./Resources/images/team_member-f0f0daf8-108w.jpg"
                                                                                 id="1949883592" class=""
                                                                                 data-dm-image-path="./Resources/images/team_member-f0f0daf8.jpg"
-                                                                                width="1170" height="1090"
-                                                                                 />
+                                                                                width="1170" height="1090" />
                                                                         </div>
                                                                         <div class="u_1055851428 graphicWidget"
                                                                             data-widget-type="graphic" id="1055851428"
@@ -931,8 +936,7 @@
                                                                                 src="./Resources/images/team_member-f0f0daf8-108w.jpg"
                                                                                 id="1061665596" class=""
                                                                                 data-dm-image-path="./Resources/images/team_member-f0f0daf8.jpg"
-                                                                                width="1170" height="1090"
-                                                                                 />
+                                                                                width="1170" height="1090" />
                                                                         </div>
                                                                         <div class="u_1825419276 graphicWidget"
                                                                             data-widget-type="graphic" id="1825419276"
@@ -978,8 +982,7 @@
                                                                                 src="./Resources/images/team_member-f0f0daf8-108w.jpg"
                                                                                 id="1108173373" class=""
                                                                                 data-dm-image-path="./Resources/images/team_member-f0f0daf8.jpg"
-                                                                                width="1170" height="1090"
-                                                                                 />
+                                                                                width="1170" height="1090" />
                                                                         </div>
                                                                         <div class="u_1923147119 graphicWidget"
                                                                             data-widget-type="graphic" id="1923147119"
@@ -1065,8 +1068,7 @@
                                                                                                             irw=""
                                                                                                             alt=""
                                                                                                             src="./Resources/images/Lacoste%20Logo.svg"
-                                                                                                            id="1230306114"
-                                                                                                             />
+                                                                                                            id="1230306114" />
                                                                                                     </a>
                                                                                                 </div>
                                                                                                 <div class="caption-container"
@@ -1116,8 +1118,7 @@
                                                                                                             irw=""
                                                                                                             alt=""
                                                                                                             src="./Resources/images/CNN%20Logo.svg"
-                                                                                                            id="1338777879"
-                                                                                                            ></a>
+                                                                                                            id="1338777879"></a>
                                                                                                 </div>
                                                                                                 <div class="caption-container"
                                                                                                     style="display:none"
@@ -1126,8 +1127,7 @@
                                                                                                         class="caption-inner"
                                                                                                         id="1840263295">
                                                                                                         <a class="caption-button dmWidget clearfix"
-                                                                                                            id="1516434611"
-                                                                                                            >
+                                                                                                            id="1516434611">
                                                                                                             <span
                                                                                                                 class="iconBg"
                                                                                                                 id="1271457861">
@@ -1158,8 +1158,7 @@
                                                                                                         irh="" irw=""
                                                                                                         alt=""
                                                                                                         src="./Resources/images/HandM%20Logo.svg"
-                                                                                                        id="1159978182"
-                                                                                                         /></a>
+                                                                                                        id="1159978182" /></a>
                                                                                             </div>
                                                                                             <div class="caption-container"
                                                                                                 style="display:none"
@@ -1203,8 +1202,7 @@
                                                                                                         irh="" irw=""
                                                                                                         alt=""
                                                                                                         src="./Resources/images/Conan.svg"
-                                                                                                        id="1310720611"
-                                                                                                         /></a>
+                                                                                                        id="1310720611" /></a>
                                                                                             </div>
                                                                                             <div class="caption-container"
                                                                                                 style="display:none"
@@ -1775,20 +1773,21 @@
                                                                                 src="./Resources/images/blank_logo-vif%202-844633f2.svg"
                                                                                 id="1669146944" class=""
                                                                                 data-dm-image-path="./Resources/images/blank_logo-vif%202-844633f2.svg"
-                                                                                width="173" height="52"
-                                                                                 /></a>
+                                                                                width="173" height="52" /></a>
                                                                     </div>
                                                                     <div class="u_1293552929 dmNewParagraph"
                                                                         data-element-type="paragraph" id="1293552929"
                                                                         style="transition: none 0s ease 0s; display: flex; flex-direction: column;"
                                                                         data-version="5">
                                                                         <h6 class="text-align-left"
-                                                                            style="line-height: 2; display: flex; justify-content:center;"> <span
+                                                                            style="line-height: 2; display: flex; justify-content:center;">
+                                                                            <span
                                                                                 style="font-weight: 300; color: var(--color_3); display: initial;">Number,
                                                                                 Street, City, State, Zip Code</span>
                                                                         </h6>
                                                                         <h6 class="text-align-left"
-                                                                            style="line-height: 2;  display: flex; justify-content:center;"> <span
+                                                                            style="line-height: 2;  display: flex; justify-content:center;">
+                                                                            <span
                                                                                 style="font-weight: 300; color: var(--color_3); display: initial;">&copy;
                                                                                 2017 Company Name</span>
                                                                         </h6>
@@ -1800,7 +1799,8 @@
                                                                         adwords=""
                                                                         data-editor="eyJ0aXRsZSI6IiIsImRpc3BsYXlUaXRsZSI6dHJ1ZSwiZm9yY2VEaXNwbGF5IjpmYWxzZSwibGF5b3V0IjoiIiwibmV0d29ya3MiOlt7InVybCI6Imh0dHBzOi8vZmFjZWJvb2suY29tLyIsIm9yZGVyIjoyMTQ3NDgzNjQ3LCJjdXN0b20iOmZhbHNlLCJpZCI6ImZhY2Vib29rIiwiaWNvbl9jbGFzcyI6IiIsImljb25fY3VzdG9tIjoiIiwiZGF0YVZhbHVlIjpudWxsfSx7InVybCI6Imh0dHBzOi8vdHdpdHRlci5jb20vIiwib3JkZXIiOjIxNDc0ODM2NDcsImN1c3RvbSI6ZmFsc2UsImlkIjoidHdpdHRlciIsImljb25fY2xhc3MiOiIiLCJpY29uX2N1c3RvbSI6IiIsImRhdGFWYWx1ZSI6bnVsbH0seyJ1cmwiOiJodHRwczovL3lvdXR1YmUuY29tLyIsIm9yZGVyIjoyMTQ3NDgzNjQ3LCJjdXN0b20iOmZhbHNlLCJpZCI6InlvdXR1YmUiLCJpY29uX2NsYXNzIjoiIiwiaWNvbl9jdXN0b20iOiIiLCJkYXRhVmFsdWUiOm51bGx9XSwiaWNvbnNfc3R5bGUiOiI1IiwiYWxsX3BhZ2VzIjpmYWxzZX0=">
                                                                         <div class="socialHubWrapper">
-                                                                            <div class="socialHubInnerDiv " style="margin-bottom: 20px;"> <a
+                                                                            <div class="socialHubInnerDiv "
+                                                                                style="margin-bottom: 20px;"> <a
                                                                                     href="https://facebook.com/"
                                                                                     target="_blank"
                                                                                     aria-label="facebook"
@@ -1845,14 +1845,20 @@
                                                                         data-element-type="paragraph" id="1890163258"
                                                                         style="transition: none; display: flex; flex-direction:column; justify-content:center;"
                                                                         data-version="5">
-                                                                        <h6 class="text-align-left" style="display: flex; justify-content:center;"> <span
+                                                                        <h6 class="text-align-left"
+                                                                            style="display: flex; justify-content:center;">
+                                                                            <span
                                                                                 style="display: initial; color: var(--color_3); font-weight: 300;">Features</span>
                                                                         </h6>
-                                                                        <h6 class="text-align-left" style="display: flex; justify-content:center;"> <span
+                                                                        <h6 class="text-align-left"
+                                                                            style="display: flex; justify-content:center;">
+                                                                            <span
                                                                                 style="display: initial; font-weight: 300; color: var(--color_3);">How
                                                                                 it Works<br /></span>
                                                                         </h6>
-                                                                        <h6 class="text-align-left" style="display: flex; justify-content:center;"> <span
+                                                                        <h6 class="text-align-left"
+                                                                            style="display: flex; justify-content:center;">
+                                                                            <span
                                                                                 style="display: initial; font-weight: 300; color: var(--color_3);">Plans</span>
                                                                         </h6>
                                                                     </div>
@@ -1872,14 +1878,20 @@
                                                                         data-element-type="paragraph" id="1521574249"
                                                                         style="transition: none; display: flex; justify-content:center; flex-direction:column;"
                                                                         data-version="5">
-                                                                        <h6 class="text-align-left" style="display: flex; justify-content:center;"> <span
+                                                                        <h6 class="text-align-left"
+                                                                            style="display: flex; justify-content:center;">
+                                                                            <span
                                                                                 style="display: initial; color: var(--color_3); font-weight: 300;">City,
                                                                                 State</span>
                                                                         </h6>
-                                                                        <h6 class="text-align-left" style="display: flex; justify-content:center;"> <span
+                                                                        <h6 class="text-align-left"
+                                                                            style="display: flex; justify-content:center;">
+                                                                            <span
                                                                                 style="display: initial; color: var(--color_3); font-weight: 300;">555-555-5555</span>
                                                                         </h6>
-                                                                        <h6 class="text-align-left" style="display: flex; justify-content:center;"> <span
+                                                                        <h6 class="text-align-left"
+                                                                            style="display: flex; justify-content:center;">
+                                                                            <span
                                                                                 style="display: initial; color: var(--color_3); font-weight: 300;">mymail@mailservice.com</span>
                                                                         </h6>
                                                                     </div>
@@ -2097,22 +2109,52 @@
     </script>
     <script>
         function sendData(quantity, side) {
-            $.ajax({
-                url: '/trade',
-                type: 'POST',
-                data: {
-                    symbol: $('#pairs option:selected').text(),
-                    side: side,
-                    quantity: quantity
-                },
-                success: function(response){
-                    if(response.success) {
-                        $('#response').html('<p>Trade successful!</p>');
-                    } else {
-                        $('#response').html('<p>Trade failed: ' + response.error + '</P>');
+            const authorizationValue = document.getElementById("authorization").value;
+            const apikeyValue = document.getElementById("apiKey").value;
+            const secretkeyValue = document.getElementById("secretKey").value;
+            if ($('#pairs option:selected').text() != "Select Pair" && authorizationValue && apikeyValue && secretkeyValue) {
+                document.getElementById("response").style.display = "none";
+                $.ajax({
+                    url: '/trade',
+                    type: 'POST',
+                    data: {
+                        symbol: $('#pairs option:selected').text(),
+                        side: side,
+                        quantity: quantity,
+                        authorization: authorizationValue,
+                        api_Key: apikeyValue,
+                        secret_Key: secretkeyValue
+                    },
+                    success: function (response) {
+                        if (response.success) {
+                            $('#response').html('<p>Trade successful!</p>');
+                        } else {
+                            $('#response').html('<p>Trade failed: ' + response.error + '</P>');
+                        }
                     }
+                })
+            } else {
+                document.getElementById("response").style.display = "block";
+                const para = document.createElement("P");
+                const node = document.createTextNode("Please enter required fields.");
+                para.appendChild(node);
+                document.getElementById("response").appendChild(para);
+                if (document.getElementById("pairs").value.toString() === "Select Pair") {
+                    document.getElementById("pairList").style.borderColor = "#ef3d3d";
                 }
-            })
+                if (!authorizationValue) {
+                    document.getElementById("authorization").style.borderColor = "#ef3d3d";
+                }
+                if (!apikeyValue) {
+                    document.getElementById("apiKey").style.borderColor = "#ef3d3d";
+                }
+                if (!secretkeyValue) {
+                    document.getElementById("secretKey").style.borderColor = "#ef3d3d";
+                }
+                setTimeout(function(){
+                    para.parentNode.removeChild(para)
+                }, 3000)
+            }
         }
     </script>
     <script>

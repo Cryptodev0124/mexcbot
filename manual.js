@@ -8,7 +8,7 @@ const apiSecret = process.env.SECRET_KEY
 const baseUrl = 'https://futures.mexc.com';
 const client = new Alternative(process.env.AUTHORIZATION, apiSecret, { baseURL: baseUrl, isAlternative: true })
 const readClient = new Future(apiKey, apiSecret, { baseURL: 'https://contract.mexc.com' });
-const allPairs = require('../src/helpers/pair.json');
+const allPairs = require('./src/helpers/pair.json');
 
 const MARKET_SYMBOL = "PEPE_USDT";
 const pairInfo = allPairs.data.filter(s => s.symbol == MARKET_SYMBOL)[0]

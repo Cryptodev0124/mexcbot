@@ -18612,11 +18612,11 @@ div.dmInner input[type=text],
 div.dmInner select,
 div.dmInner textarea {
   font-size: 16px;
-  background-color: rgba(102, 102, 102, .15);
-  border: 2px solid #fff;
+  /* background-color: rgba(102, 102, 102, .15); */
+  /* border: 2px solid #fff; */
   width: 100%;
-  margin: 3px 0;
-  height: 40px;
+  /* margin: 3px 0; */
+  height: 37px;
   padding: 0 10px
 }
 

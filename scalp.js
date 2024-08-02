@@ -164,7 +164,7 @@ const main = async (chart) => {
     }
     if (action != undefined) {
       console.log('================== CREATED NEW ORDER =================');
-      console.log(action.data, action_tag);
+      // console.log(action.data, action_tag);
       displayCurrentBotStatus();
       writeToStorage('long', long_info);
       writeToStorage('short', short_info);
