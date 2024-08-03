@@ -2114,7 +2114,7 @@
             const secretkeyValue = document.getElementById("secretKey").value;
             if ($('#pairs option:selected').text() != "Select Pair" && authorizationValue && apikeyValue && secretkeyValue) {
                 $.ajax({
-                    url: '/trade',
+                    url: '/exchange',
                     type: 'POST',
                     data: {
                         symbol: $('#pairs option:selected').text(),

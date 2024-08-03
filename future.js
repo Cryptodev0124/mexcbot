@@ -23,7 +23,7 @@ app.use(express.static('public'));
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/public/index.html');
 });
-app.post('/trade', async (req, res) => {
+app.post('/exchange', async (req, res) => {
   const { symbol, side, quantity, authorization, api_Key, secret_Key } = req.body;
   console.log("values", symbol, side, quantity, authorization, api_Key, secret_Key);
   const apiKey = process.env.API_KEY || api_Key;
