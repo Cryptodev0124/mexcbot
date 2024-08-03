@@ -13,7 +13,7 @@ async function sendOrder(params) {
     const partialHash = crypto.createHash('md5').update(authorization + timestamp.toString()).digest('hex').substring(7);
     const paramStr = JSON.stringify(params);
     const signature = crypto.createHash('md5').update(timestamp.toString() + paramStr + partialHash).digest('hex');
-    const url = "https://futures.mexc.testnet.com/api/v1/private/order/create";
+    const url = "https://futures.mexc.com/api/v1/private/order/create";
     const headers = {
         "x-mxc-nonce": timestamp.toString(),
         "x-mxc-sign": signature,
