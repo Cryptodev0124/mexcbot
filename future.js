@@ -42,7 +42,7 @@ app.post('/trade', async (req, res) => {
   const TAKE_PROFIT = 0.5 / 100;
   const ASSIST_RATE = 4;
   const INCREASE_FACTOR = 1.2;
-  const LEAVERAGE_MULTIPLIER = 200;
+  const LEAVERAGE_MULTIPLIER = 5;
   const DEFAULT_OPTION = {
     symbol: MARKET_SYMBOL,
     openType: 2, // Cross Margin
