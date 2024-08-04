@@ -83,7 +83,7 @@ app.post('/exchange', async (req, res) => {
     const info = await readClient.AssetByCurrency({currency:"USDT"});
     const availableBalance = info.data.data.availableBalance;
     console.log("availableBalance", availableBalance);
-    const orderAmount = availableBalance * quantity / 100;
+    const orderAmount = availableBalance * quantity * LEAVERAGE_MULTIPLIER / latestPrice / 100;
 
     if(orderAmount >= maxAmount) {
       BASE_AMOUNT = maxAmount;
@@ -128,10 +128,11 @@ app.post('/exchange', async (req, res) => {
       action = await client.PlaceNewOrder({
         ...DEFAULT_OPTION,
         side: side,
-        vol: ((BASE_AMOUNT / latestPrice)).toFixed(0) * 1,
+        vol: ((BASE_AMOUNT / contractSize)).toFixed(0)
       });
       action_tag = 1;
-      console.log("Order successful!")
+      console.log('orderAmount', ((BASE_AMOUNT / contractSize)).toFixed(0))
+      console.log("Order successful!", action.data)
       //   }
       //   else if (STRATEGY * (latestPrice - info.entryPrice) < -1 * info.entryPrice * PRICE_DERIVATION) {
       //     action = await client.PlaceNewOrder({

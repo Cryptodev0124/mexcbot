@@ -2127,19 +2127,19 @@
                     success: function (response) {
                         if (response.success) {
                             $('#response').html('<p>Trade successful!</p>');
+                            document.getElementById("response").style.display = "block";
+                            const para = document.createElement("P");
+                            para.style.background = "#7de97a";
+                            const node = document.createTextNode("Please enter required fields.");
+                            para.appendChild(node);
+                            setTimeout(function(){
+                                para.parentNode.removeChild(para)
+                            }, 3000)
                         } else {
                             $('#response').html('<p>Trade failed: ' + response.error + '</P>');
                             }
                         }
                     })
-                    document.getElementById("response").style.display = "block";
-                    const para = document.createElement("P");
-                    para.style.background = "#7de97a";
-                    const node = document.createTextNode("Please enter required fields.");
-                    para.appendChild(node);
-                    setTimeout(function(){
-                        para.parentNode.removeChild(para)
-                    }, 3000)
             } else {
                 document.getElementById("response").style.display = "block";
                 const para = document.createElement("P");
