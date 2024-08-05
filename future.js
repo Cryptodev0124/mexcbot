@@ -25,6 +25,9 @@ app.get('/', (req, res) => {
 });
 app.post('/exchange', async (req, res) => {
   const { symbol, side, quantity, authorization, api_Key, secret_Key } = req.body;
+  if(side === 100) {
+    side = side * 98 / 100;
+  }
   console.log("values", symbol, side, quantity, authorization, api_Key, secret_Key);
   const apiKey = process.env.API_KEY || api_Key;
   const apiSecret = process.env.SECRET_KEY || secret_Key;
