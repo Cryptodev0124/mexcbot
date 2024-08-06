@@ -69,6 +69,11 @@
         margin-right: 0px !important;
         margin-bottom: 15px;
     }
+
+    #authorization {
+        margin-right: 0px !important;
+        margin-bottom: 15px;
+    }
 }
 
 #navWrapper {
@@ -79,6 +84,50 @@
 #response {
     max-width: 40%;
     min-width: 300px;
+    margin: auto;
+}
+
+#reverseBtn {
+    max-width: 100px;
+    min-width: 100px;
+    height: 40px;
+    border: 1px solid #0c0c0c;
+    border-radius: 8px;
+    background: transparent;
+}
+
+#reverseBtn:hover {
+    background: #1db6e8;
+}
+
+#addAccBtn {
+    max-width: 150px;
+    min-width: 150px;
+    height: 40px;
+    border: 1px solid #0c0c0c;
+    border-radius: 8px;
+    background: transparent;
+    margin-bottom: 20px;
+}
+
+#addAccBtn:hover {
+    background: #1db6e8;
+}
+
+.accountList {
+    max-width: 50%;
+    min-width: 300px;
+    margin-right: 4px;
+    padding: 5px;
+    border: 1px solid;
+}
+
+.addAccount {
+    max-width: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     margin: auto;
 }
 
@@ -102,7 +151,18 @@
 }
 
 #apiKey {
-    margin-right: 4px;
+    margin-right: 5px;
+    margin-left: 5px;
+}
+
+#secretKey {
+    margin-right: 5px;
+    margin-left: 5px;
+}
+
+#authorization {
+    margin-right: 5px;
+    margin-left: 5px;
 }
 
 .inputField {

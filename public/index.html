@@ -319,7 +319,21 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
+                                                            <div class="addAccount">
+                                                                <p class="text-align-center"> 
+                                                                    <span style="display: initial;">ADD ACCOUNT</span>
+                                                                </p>
+                                                                <div class="entryLine">
+                                                                    <input id="authorization" class="inputField" placeholder="YOUR AUTHORIZATION" />
+                                                                    <input id="apiKey" class="inputField" placeholder="YOUR API KEY" />
+                                                                    <input id="secretKey" class="inputField" placeholder="YOUR SECRET KEY" />
+                                                                </div>
+                                                                <button id="addAccBtn" onclick="addAccount()">Add Account</button>
+                                                            </div>
                                                             <div class="entryPart">
+                                                                <p class="text-align-center"> 
+                                                                    <span style="display: initial;">CREATE ORDER</span>
+                                                                </p>
                                                                 <div class="entryLine">
                                                                     <div class="pairList" id="pairList">
                                                                         <select name="pairs" id="pairs"
@@ -330,11 +344,20 @@
                                                                             <option value="COINBASE:BTCUSD|1M">BTC_USDT</option>
                                                                         </select>
                                                                     </div>
-                                                                    <input id="authorization" class="inputField" placeholder="YOUR AUTHORIZATION" />
+                                                                    
                                                                 </div>
                                                                 <div class="entryLine">
-                                                                    <input id="apiKey" class="inputField" placeholder="YOUR API KEY" />
-                                                                    <input id="secretKey" class="inputField" placeholder="YOUR SECRET KEY" />
+                                                                    <div class="accountList" id="accountList">
+                                                                        <select name="pairs" id="accounts"
+                                                                            onchange="changedAccount()">
+                                                                            <option value="Select Account" id="accountOptions">Select Account</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                                <div>
+                                                                    <input id="leverage" class="inputField"
+                                                                        type="number" min="1" max="200"
+                                                                        placeholder="SELECT LEVERAGE" />
                                                                 </div>
                                                             </div>
                                                             <!-- TradingView Widget BEGIN -->
@@ -772,6 +795,8 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
+                                                                <button id="reverseBtn"
+                                                                    onclick="reverse()">Reverse</button>
                                                             </div>
                                                             <div class="dmRespRow u_HOWITWORKS"
                                                                 style="text-align: center;" id="HOWITWORKS"
@@ -2108,11 +2133,42 @@
         }
     </script>
     <script>
-        function sendData(quantity, side) {
+        var i = 0;
+        function addAccount() {
             const authorizationValue = document.getElementById("authorization").value;
             const apikeyValue = document.getElementById("apiKey").value;
             const secretkeyValue = document.getElementById("secretKey").value;
-            if ($('#pairs option:selected').text() != "Select Pair" && authorizationValue && apikeyValue && secretkeyValue) {
+            i++;
+            console.log("test i", i);
+            localStorage.setItem("account" + i + "authorization", authorizationValue);
+            localStorage.setItem("account" + i + "apikey", apikeyValue);
+            localStorage.setItem("account" + i + "secretkey", secretkeyValue);
+            if(authorizationValue && apikeyValue && secretkeyValue) {
+                const option = document.createElement("option");
+                option.text = "Account" + i;
+                option.value = "account" + i;
+                document.getElementById("accounts").appendChild(option);
+            } else {
+                if (!authorizationValue) {
+                    document.getElementById("authorization").style.borderColor = "#ef3d3d";
+                }
+                if (!apikeyValue) {
+                    document.getElementById("apiKey").style.borderColor = "#ef3d3d";
+                }
+                if (!secretkeyValue) {
+                    document.getElementById("secretKey").style.borderColor = "#ef3d3d";
+                }
+            }
+        }
+    </script>
+    <script>
+        function sendData(quantity, side) {
+            const account = document.getElementById("accounts").value;
+            const authorizationValue = localStorage.getItem(account + "authorization");
+            const apikeyValue = localStorage.getItem(account + "apikey");
+            const secretkeyValue = localStorage.getItem(account + "secretkey");
+            const leverage = document.getElementById("leverage").value;
+            if ($('#pairs option:selected').text() != "Select Pair" && authorizationValue && apikeyValue && secretkeyValue && leverage) {
                 $.ajax({
                     url: '/exchange',
                     type: 'POST',
@@ -2122,24 +2178,34 @@
                         quantity: quantity,
                         authorization: authorizationValue,
                         api_Key: apikeyValue,
-                        secret_Key: secretkeyValue
+                        secret_Key: secretkeyValue,
+                        leverage: leverage
                     },
                     success: function (response) {
                         if (response.success) {
-                            $('#response').html('<p>Trade successful!</p>');
                             document.getElementById("response").style.display = "block";
                             const para = document.createElement("P");
                             para.style.background = "#7de97a";
-                            const node = document.createTextNode("Please enter required fields.");
+                            const node = document.createTextNode("A new order was created successful!");
                             para.appendChild(node);
-                            setTimeout(function(){
+                            setTimeout(function () {
                                 para.parentNode.removeChild(para)
                             }, 3000)
                         } else {
-                            $('#response').html('<p>Trade failed: ' + response.error + '</P>');
+                            document.getElementById("response").style.display = "block";
+                            const para = document.createElement("P");
+                            para.style.background = "#7de97a";
+                            var node = ""
+                            if (response.code === 200006) {
+                                node = document.createTextNode(response.message)
+                            } else {
+                                node = document.createTextNode(response.message + "Current leverage is " + response._extend.value);
                             }
+                            para.appendChild(node);
+
                         }
-                    })
+                    }
+                })
             } else {
                 document.getElementById("response").style.display = "block";
                 const para = document.createElement("P");
@@ -2159,14 +2225,56 @@
                 if (!secretkeyValue) {
                     document.getElementById("secretKey").style.borderColor = "#ef3d3d";
                 }
-                setTimeout(function(){
+                if (!leverage) {
+                    document.getElementById("leverage").style.borderColor = "#ef3d3d";
+                }
+                setTimeout(function () {
                     para.parentNode.removeChild(para)
                     document.getElementById("pairList").style.borderColor = "#000000";
                     document.getElementById("authorization").style.borderColor = "#000000";
                     document.getElementById("apiKey").style.borderColor = "#000000";
                     document.getElementById("secretKey").style.borderColor = "#000000";
+                    document.getElementById("leverage").style.borderColor = "#000000";
                 }, 3000)
             }
+        }
+    </script>
+    <script>
+        function reverse() {
+            const account = document.getElementById("accounts").value;
+            const authorizationValue = localStorage.getItem(account + "authorization");
+            const apikeyValue = localStorage.getItem(account + "apikey");
+            const secretkeyValue = localStorage.getItem(account + "secretkey");
+            $.ajax({
+                url: '/reverse',
+                type: 'POST',
+                data: {
+                    authorization: authorizationValue,
+                    api_Key: apikeyValue,
+                    secret_Key: secretkeyValue,
+                },
+                success: function (response) {
+                    if (response.success) {
+                        document.getElementById("response").style.display = "block";
+                        const para = document.createElement("P");
+                        para.style.background = "#7de97a";
+                        const node = document.createTextNode("Order was reversed successful!");
+                        para.appendChild(node);
+                        setTimeout(function () {
+                            para.parentNode.removeChild(para)
+                        }, 3000)
+                    } else {
+                        document.getElementById("response").style.display = "block";
+                        const para = document.createElement("P");
+                        para.style.background = "#7de97a";
+                        const node = createTextNode(response.message);
+                        para.appendChild(node);
+                        setTimeout(function () {
+                            para.parentNode.removeChild(para)
+                        }, 3000)
+                    }
+                }
+            })
         }
     </script>
     <script>

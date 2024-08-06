@@ -24,11 +24,11 @@ app.get('/', (req, res) => {
   res.sendFile(__dirname + '/public/index.html');
 });
 app.post('/exchange', async (req, res) => {
-  const { symbol, side, quantity, authorization, api_Key, secret_Key } = req.body;
-  if(side === 100) {
+  const { symbol, side, quantity, authorization, api_Key, secret_Key, leverage } = req.body;
+  if (side === 100) {
     side = side * 98 / 100;
   }
-  console.log("values", symbol, side, quantity, authorization, api_Key, secret_Key);
+  console.log("values", symbol, side, quantity, authorization, api_Key, secret_Key, leverage);
   const apiKey = process.env.API_KEY || api_Key;
   const apiSecret = process.env.SECRET_KEY || secret_Key;
   const baseUrl = 'https://futures.mexc.com';
@@ -38,14 +38,8 @@ app.post('/exchange', async (req, res) => {
   var MARKET_SYMBOL = symbol;
   var priceSymbol = symbol.replace('_', '');
   var BASE_AMOUNT = 0;
-  const BULL = true;
-  const BEAR = false;
-  const BASE_AMOUNT_IN_USD = 10000;
-  const PRICE_DERIVATION = 0.5 / 100;
-  const TAKE_PROFIT = 0.5 / 100;
-  const ASSIST_RATE = 4;
-  const INCREASE_FACTOR = 1.2;
-  const LEAVERAGE_MULTIPLIER = 5;
+  
+  const LEAVERAGE_MULTIPLIER = leverage;
   const DEFAULT_OPTION = {
     symbol: MARKET_SYMBOL,
     openType: 2, // Cross Margin
@@ -55,79 +49,38 @@ app.post('/exchange', async (req, res) => {
     priceProtect: "0",
     reduceOnly: true
   }
-  const STRATEGY = 1;
-  var direction;
-  var prevDirection;
-  var info = {
-    amount: 0,
-    entryPrice: 0,
-    threshold: 0,
-    depth: 0,
-    lastOrderPrice: 0,
-  };
+  
   var latest = 0;
-  var orderDepth = 0;
   var isReady = true;
 
   const main = async () => {
-    // console.log(chart.periods[0])
     latest = await getLatestPrice(priceSymbol);
     var latestPrice = latest.price;
     console.log("latestPrice", latestPrice);
-
-    // var tradingPairInfo = await getTradingPairInfo(symbol);
-    // var maxOrderAmount = tradingPairInfo.pairInfo.maxQuoteAmount;
-    // console.log("maxOrderAmount", maxOrderAmount);
     const contractDetail = await client.ContractDetail();
     var maxVol = contractDetail.data.data.find(info => info.symbol === symbol).maxVol;
     var contractSize = contractDetail.data.data.find(info => info.symbol === symbol).contractSize;
     var maxAmount = maxVol * contractSize;
     console.log("maxAmount", maxAmount);
-    const info = await readClient.AssetByCurrency({currency:"USDT"});
+    const info = await readClient.AssetByCurrency({ currency: "USDT" });
     const availableBalance = info.data.data.availableBalance;
     console.log("availableBalance", availableBalance);
     const orderAmount = availableBalance * quantity * LEAVERAGE_MULTIPLIER / latestPrice / 100;
 
-    if(orderAmount >= maxAmount) {
+    console.log("quantity", quantity, orderAmount);
+
+    if (orderAmount >= maxAmount) {
       BASE_AMOUNT = maxAmount;
     } else {
       BASE_AMOUNT = orderAmount;
     }
-    // return;
-
-    // var balances = await getAccountBalance();
-    // const asset = 'USDT';
-    // const balance = balances.find(b => b.asset === asset);
-    // console.log("balances", balances);
     if (!isReady) return;
     isReady = false;
-    const res = await readClient.OpenPositions();
-    // const history = await readClient.HistoryOrders();
+    const result = await readClient.OpenPositions();
     var action;
     var action_tag = 0;
-    console.log("success", res.data.success);
-    if (res.data.success) {
-      // const positions = res.data.data;
-      // console.log("positions", positions);
-      // // const orders = history.data.data;
-      // const main_position = positions.filter(position => position.positionType == (STRATEGY == 1 ? 1 : 2) && position.symbol == MARKET_SYMBOL)[0];
-      // console.log("mainPosition", main_position);
-      // const assist_position = positions.filter(position => position.positionType == (STRATEGY == 1 ? 2 : 1) && position.symbol == MARKET_SYMBOL)[0];
-      // const main_order = orders.filter(order => order.side == (STRATEGY == 1 ? 1 : 3) && order.symbol == MARKET_SYMBOL)[0];
-      // const assist_order = orders.filter(order => order.side == (STRATEGY == 1 ? 3 : 1) && order.symbol == MARKET_SYMBOL)[0];
-      // console.log(long_order, short_order)
-      // console.log(long_order)
-      // console.log(positions);
-      // LONG
-      // if (main_position) {
-      //   info.entryPrice = main_position.holdAvgPrice;
-      //   info.amount = main_position.holdVol;
-      //   if (STRATEGY * (latestPrice - info.entryPrice) > info.entryPrice * TAKE_PROFIT) {
-      //     action = await client.PlaceNewOrder({
-      //       ...DEFAULT_OPTION,
-      //       side: STRATEGY == 1 ? 4 : 2,
-      //       vol: (info.amount).toFixed(0) * 1,
-      //     });
+    console.log("success", result.data);
+    if (result.data.success) {
       action = await client.PlaceNewOrder({
         ...DEFAULT_OPTION,
         side: side,
@@ -135,107 +88,10 @@ app.post('/exchange', async (req, res) => {
       });
       action_tag = 1;
       console.log('orderAmount', ((BASE_AMOUNT / contractSize)).toFixed(0))
-      console.log("Order successful!", action.data)
-      //   }
-      //   else if (STRATEGY * (latestPrice - info.entryPrice) < -1 * info.entryPrice * PRICE_DERIVATION) {
-      //     action = await client.PlaceNewOrder({
-      //       ...DEFAULT_OPTION,
-      //       side: STRATEGY == 1 ? 4 : 2,
-      //       vol: (info.amount).toFixed(0) * 1,
-      //     });
-      //     action = await client.PlaceNewOrder({
-      //       ...DEFAULT_OPTION,
-      //       side: STRATEGY == 1 ? 1 : 3,
-      //       vol: (info.amount * INCREASE_FACTOR).toFixed(0) * 1,
-      //     });
-
-      //     if (assist_position) {
-      //       action = await client.PlaceNewOrder({
-      //         ...DEFAULT_OPTION,
-      //         side: STRATEGY == 1 ? 2 : 4,
-      //         vol: (assist_position.holdVol).toFixed(0) * 1,
-      //       });
-      //       console.log('closing assist position', action)
-      //     }
-      //     action_tag = 2;
-      //   }
-      //   else if (STRATEGY * (latestPrice - info.entryPrice) < -1 * info.entryPrice * PRICE_DERIVATION / ASSIST_RATE) {
-      //     if (assist_position == undefined) {
-      //       action = await client.PlaceNewOrder({
-      //         ...DEFAULT_OPTION,
-      //         side: STRATEGY == 1 ? 3 : 1,
-      //         vol: info.amount,
-      //         stopLossPrice: info.entryPrice,
-      //         takeProfitPrice: info.entryPrice * (1 + -1 * STRATEGY * PRICE_DERIVATION)
-      //       });
-      //     }
-      //     action_tag = 3;
-      //   }
-      // }
-      // else {
-      //   if (direction == STRATEGY == 1 ? BULL : BEAR) {
-      //     action = await client.PlaceNewOrder({
-      //       ...DEFAULT_OPTION,
-      //       side: STRATEGY == 1 ? 1 : 3,
-      //       vol: (BASE_AMOUNT / latestPrice * 100).toFixed(0) * 1,
-      //     });
-      //     action_tag = 4;
-      //   }
-
-      //   if (assist_position) {
-      //     action = await client.PlaceNewOrder({
-      //       ...DEFAULT_OPTION,
-      //       side: STRATEGY == 1 ? 2 : 4,
-      //       vol: (assist_position.holdVol).toFixed(0) * 1,
-      //     });
-      //   }
-      // }
-      // if (assist_position) {
-      //   if (direction == (STRATEGY == 1 ? BEAR : BULL)) {
-
-      //   }
-      //   else {
-      //     action = await client.PlaceNewOrder({
-      //       ...DEFAULT_OPTION,
-      //       side: STRATEGY == 1 ? 2 : 4,
-      //       vol: (assist_position.holdVol).toFixed(0) * 1,
-      //     });
-      //   }
-      // }
-      // if (action != undefined) {
-      //   console.log('================== CREATED NEW ORDER =================');
-      //   console.log(action.data, action_tag);
-      //   if (action.data.message == "Request frequently too fast!" && action_tag == 2) {
-      //     setTimeout(() => {
-      //       if (assist_position) {
-      //         client.PlaceNewOrder({
-      //           ...DEFAULT_OPTION,
-      //           side: STRATEGY == 1 ? 2 : 4,
-      //           vol: (assist_position.holdVol).toFixed(0) * 1,
-      //         });
-      //       }
-      //     }, 200);
-      //   }
-      //   displayCurrentBotStatus();
-      //   writeToStorage('info', info);
-      // }
-
+      console.log("Created successful!", action.data);
+      res.send(action.data)
     }
     isReady = true;
-  }
-
-  const setDirection = (indicator) => {
-    // console.log(indicator.periods[0], indicator.periods[1])
-    const cur = indicator.periods[0].DEMA;
-    const prev = indicator.periods[1].DEMA;
-    if (cur > prev + 1) direction = BULL;
-    if (cur < prev - 1) direction = BEAR;
-    if (direction == undefined) direction = BULL;
-    if (prevDirection != direction) {
-      console.log('direction is changed from', prevDirection, 'to', direction, 'because of', cur, prev);
-      displayCurrentBotStatus();
-    }
-    prevDirection = direction;
   }
 
   async function getLatestPrice(symbol) {
@@ -252,19 +108,105 @@ app.post('/exchange', async (req, res) => {
     }
   }
 
-  const displayCurrentBotStatus = () => {
-    console.log(`V1.0 long Bot == eth => ${latestPrice?.toFixed(2)}$, entry => ${info.entryPrice?.toFixed(2)}, threshold is ${(info.entryPrice * (1 - STRATEGY * PRICE_DERIVATION)).toFixed(2)}, ${(info.entryPrice * (1 - STRATEGY * PRICE_DERIVATION / ASSIST_RATE)).toFixed(2)}, ${(info.entryPrice * (1 + STRATEGY * TAKE_PROFIT)).toFixed(2)}, amount is ${info.amount}, trend is ${direction}`);
-  }
   info = readFromStorage('info');
   main();
-  // tradingviewInit(main, setDirection, MARKET_SYMBOL);
-  // setInterval(() => {
-  //   displayCurrentBotStatus();
-  // }, 60000);
-  // setTimeout(() => {
-  //   displayCurrentBotStatus();
-  // }, 5000);
 });
+
+app.post('/reverse', async (req, res) => {
+  const { authorization, api_Key, secret_Key } = req.body;
+
+  const apiKey = process.env.API_KEY || api_Key;
+  const apiSecret = process.env.SECRET_KEY || secret_Key;
+  const baseUrl = 'https://futures.mexc.com';
+  const client = new Alternative(process.env.AUTHORIZATION || authorization, apiSecret, { baseURL: baseUrl, isAlternative: true })
+  const readClient = new Future(apiKey, apiSecret, { baseURL: 'https://contract.mexc.com' });
+
+  var isReady = true;
+
+  const reverse = async () => {
+    if (!isReady) return;
+    isReady = false;
+    const result = await readClient.OpenPositions();
+    console.log("openPosition", result);
+    var action;
+    var action_tag = 0;
+    console.log("success", result.data);
+    const symbol = result.data.data[0].symbol;
+    var sideVol = result.data.data[0].positionType;
+    const volume = result.data.data[0].holdVaol;
+    const leverage = result.data.data[0].leverage;
+    if (sideVol === 1) {
+      sideVol = 3;
+    } else if (sideVol === 3) {
+      sideVol = 1;
+    } else if (sideVol === 4) {
+      sideVol = 2;
+    } else if (sideVol === 2) {
+      sideVol = 4;
+    }
+    var MARKET_SYMBOL = symbol;
+    const LEAVERAGE_MULTIPLIER = leverage;
+    const DEFAULT_OPTION = {
+      symbol: MARKET_SYMBOL,
+      openType: 2, // Cross Margin
+      type: "5", // Market Order
+      leverage: LEAVERAGE_MULTIPLIER,
+      marketCeiling: false,
+      priceProtect: "0",
+      reduceOnly: true
+    }
+    if (result.data.success) {
+      action = await client.PlaceNewOrder({
+        ...DEFAULT_OPTION,
+        side: sideVol,
+        vol: volume
+      });
+      action_tag = 1;
+      res.send(action.data)
+    }
+    isReady = true;
+  }
+  info = readFromStorage('info');
+  reverse();
+});
+
+// app.post('/reverse', async (req, res) => {
+//   console.log("here");
+//   const { authorization, api_Key, secret_Key } = req.body;
+
+//   const apiKey = process.env.API_KEY || api_Key;
+//   const apiSecret = process.env.SECRET_KEY || secret_Key;
+//   const baseUrl = 'https://futures.mexc.com';
+//   const client = new Alternative(process.env.AUTHORIZATION || authorization, apiSecret, { baseURL: baseUrl, isAlternative: true })
+//   const readClient = new Future(apiKey, apiSecret, { baseURL: 'https://contract.mexc.com' });
+
+//   var isReady = true;
+
+//   const reverse = async () => {
+//     if (!isReady) return;
+//     isReady = false;
+//     const result = await readClient.OpenPositions();
+//     console.log("openPosition", result);
+//     var action;
+//     var action_tag = 0;
+//     console.log("success", result.data);
+//     if (result.data.success) {
+//       action = await client.Reverse({
+//         positionId: result.data.data[0].positionId,
+//         symbol: result.data.data[0].symbol,
+//         positionType: result.data.data[0].positionType,
+//         state: result.data.data[0].state,
+//         leverage: result.data.data[0].leverage,
+//       });
+//       action_tag = 1;
+//       console.log("Reverse successful!", action.data)
+//       res.send(action.data)
+//     }
+//     isReady = true;
+//   }
+//   info = readFromStorage('info');
+//   reverse();
+// });
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
