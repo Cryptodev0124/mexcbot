@@ -2133,7 +2133,16 @@
         }
     </script>
     <script>
-        var i = 0;
+        var accountInfo = JSON.parse(localStorage.getItem('accountInfo')) ?? [];
+        if(accountInfo.length > 0) {
+            for(let i=0;i<accountInfo.length;i++) {
+                const option = document.createElement("option");
+                option.text = accountInfo[i].text;
+                option.value = accountInfo[i].value;
+                document.getElementById("accounts").appendChild(option);
+            }
+        }
+        var i = accountInfo.length;
         function addAccount() {
             const authorizationValue = document.getElementById("authorization").value;
             const apikeyValue = document.getElementById("apiKey").value;
@@ -2148,6 +2157,8 @@
                 option.text = "Account" + i;
                 option.value = "account" + i;
                 document.getElementById("accounts").appendChild(option);
+                accountInfo.push({text: option.text, value: option.value});
+                localStorage.setItem('accountInfo', JSON.stringify(accountInfo));
             } else {
                 if (!authorizationValue) {
                     document.getElementById("authorization").style.borderColor = "#ef3d3d";
@@ -2158,6 +2169,11 @@
                 if (!secretkeyValue) {
                     document.getElementById("secretKey").style.borderColor = "#ef3d3d";
                 }
+                setTimeout(function () {
+                    document.getElementById("authorization").style.borderColor = "#000000";
+                    document.getElementById("apiKey").style.borderColor = "#000000";
+                    document.getElementById("secretKey").style.borderColor = "#000000";
+                }, 3000)
             }
         }
     </script>
@@ -2216,14 +2232,8 @@
                 if (document.getElementById("pairs").value.toString() === "Select Pair") {
                     document.getElementById("pairList").style.borderColor = "#ef3d3d";
                 }
-                if (!authorizationValue) {
-                    document.getElementById("authorization").style.borderColor = "#ef3d3d";
-                }
-                if (!apikeyValue) {
-                    document.getElementById("apiKey").style.borderColor = "#ef3d3d";
-                }
-                if (!secretkeyValue) {
-                    document.getElementById("secretKey").style.borderColor = "#ef3d3d";
+                if (document.getElementById("accounts").value.toString() === "Select Account") {
+                    document.getElementById("accountList").style.borderColor = "#ef3d3d";
                 }
                 if (!leverage) {
                     document.getElementById("leverage").style.borderColor = "#ef3d3d";
@@ -2231,9 +2241,7 @@
                 setTimeout(function () {
                     para.parentNode.removeChild(para)
                     document.getElementById("pairList").style.borderColor = "#000000";
-                    document.getElementById("authorization").style.borderColor = "#000000";
-                    document.getElementById("apiKey").style.borderColor = "#000000";
-                    document.getElementById("secretKey").style.borderColor = "#000000";
+                    document.getElementById("accountList").style.borderColor = "#000000";
                     document.getElementById("leverage").style.borderColor = "#000000";
                 }, 3000)
             }

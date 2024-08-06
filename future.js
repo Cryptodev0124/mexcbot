@@ -127,23 +127,15 @@ app.post('/reverse', async (req, res) => {
     if (!isReady) return;
     isReady = false;
     const result = await readClient.OpenPositions();
-    console.log("openPosition", result);
+    console.log("resultPosition", result.data);
     var action;
     var action_tag = 0;
-    console.log("success", result.data);
     const symbol = result.data.data[0].symbol;
     var sideVol = result.data.data[0].positionType;
-    const volume = result.data.data[0].holdVaol;
+    const volume = result.data.data[0].holdVol;
     const leverage = result.data.data[0].leverage;
-    if (sideVol === 1) {
-      sideVol = 3;
-    } else if (sideVol === 3) {
-      sideVol = 1;
-    } else if (sideVol === 4) {
-      sideVol = 2;
-    } else if (sideVol === 2) {
-      sideVol = 4;
-    }
+    
+    console.log("getPositionResult", symbol, sideVol, volume, leverage);
     var MARKET_SYMBOL = symbol;
     const LEAVERAGE_MULTIPLIER = leverage;
     const DEFAULT_OPTION = {
@@ -156,13 +148,35 @@ app.post('/reverse', async (req, res) => {
       reduceOnly: true
     }
     if (result.data.success) {
-      action = await client.PlaceNewOrder({
-        ...DEFAULT_OPTION,
-        side: sideVol,
-        vol: volume
-      });
-      action_tag = 1;
-      res.send(action.data)
+      if (sideVol === 1) {
+        action = await client.PlaceNewOrder({
+          ...DEFAULT_OPTION,
+          side: 4,
+          vol: volume
+        });
+        action = await client.PlaceNewOrder({
+          ...DEFAULT_OPTION,
+          side: 3,
+          vol: volume
+        });
+        action_tag = 1;
+        console.log("Reverse successful!", action.data);
+        res.send(action.data)
+      } else if (sideVol === 2) {
+        action = await client.PlaceNewOrder({
+          ...DEFAULT_OPTION,
+          side: 2,
+          vol: volume
+        });
+        action = await client.PlaceNewOrder({
+          ...DEFAULT_OPTION,
+          side: 1,
+          vol: volume
+        });
+        action_tag = 1;
+        console.log("Reverse successful!", action.data);
+        res.send(action.data)
+      }
     }
     isReady = true;
   }
