@@ -105,6 +105,23 @@
     background: #1db6e8;
 }
 
+#sellAllBtn {
+    display: flex;
+    justify-content: center;
+    margin: auto;
+    align-items: center;
+    max-width: 100px;
+    min-width: 100px;
+    height: 40px;
+    border: 1px solid #0c0c0c;
+    border-radius: 8px;
+    background: transparent;
+}
+
+#sellAllBtn:hover {
+    background: #1db6e8;
+}
+
 #addAccBtn {
     max-width: 150px;
     min-width: 150px;
