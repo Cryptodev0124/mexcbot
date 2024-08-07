@@ -324,6 +324,7 @@
                                                                     <span style="display: initial;">ADD ACCOUNT</span>
                                                                 </p>
                                                                 <div class="entryLine">
+                                                                    <input id="accountName" class="inputField" placeholder="ACCOUNT NAME" />
                                                                     <input id="authorization" class="inputField" placeholder="YOUR AUTHORIZATION" />
                                                                     <input id="apiKey" class="inputField" placeholder="YOUR API KEY" />
                                                                     <input id="secretKey" class="inputField" placeholder="YOUR SECRET KEY" />
@@ -354,10 +355,12 @@
                                                                         </select>
                                                                     </div>
                                                                 </div>
-                                                                <div>
-                                                                    <input id="leverage" class="inputField"
+                                                                <div class="entryLine">
+                                                                    <div class="selectLeverage">
+                                                                        <input id="leverage"
                                                                         type="number" min="1" max="200"
                                                                         placeholder="SELECT LEVERAGE" />
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                             <!-- TradingView Widget BEGIN -->
@@ -1772,12 +1775,12 @@
                                             <div class="sticky-widgets-container-global" id="1138784923"> <a
                                                     data-display-type="block"
                                                     class="u_1311344394 align-center dmButtonLink dmWidget dmWwr default dmOnlyButton dmDefaultGradient flexButton sticky-desktop-position-bottom-right sticky-mobile-position-bottom-right"
-                                                    file="false" href="#" data-element-type="dButtonLinkId"
-                                                    id="1311344394" raw_url="#" data-target-page-alias="home">
+                                                    file="false" data-element-type="dButtonLinkId"
+                                                    id="1311344394" data-target-page-alias="home">
                                                     <span class="iconBg" aria-hidden="true" id="1154768756"> <span
                                                             class="icon hasFontIcon icon-star" id="1491009166"></span>
                                                     </span>
-                                                    <span class="text" id="1231063567">SELL ALL</span>
+                                                    <span class="text" id="1231063567" onclick="sellAll()">SELL ALL</span>
                                                 </a>
                                             </div>
                                             <div class="dmFooterContainer">
@@ -2133,6 +2136,49 @@
         }
     </script>
     <script>
+        function sellAll() {
+            const account = document.getElementById("accounts").value;
+            const authorizationValue = JSON.parse(localStorage.getItem(account))[0].authorization;
+            const apikeyValue = JSON.parse(localStorage.getItem(account))[0].apikey;
+            const secretkeyValue = JSON.parse(localStorage.getItem(account))[0].secretkey;
+            $.ajax({
+                url: '/sellAll',
+                type: 'POST',
+                data: {
+                    authorization: authorizationValue,
+                    api_Key: apikeyValue,
+                    secret_Key: secretkeyValue,
+                },
+                success: function (response) {
+                    if (response.success) {
+                        document.getElementById("response").style.display = "block";
+                        const para = document.createElement("P");
+                        para.style.background = "#7de97a";
+                        const node = document.createTextNode("All orders was closed successful!");
+                        para.appendChild(node);
+                        setTimeout(function () {
+                            para.parentNode.removeChild(para)
+                        }, 3000)
+                    } else {
+                        document.getElementById("response").style.display = "block";
+                        const para = document.createElement("P");
+                        para.style.background = "#7de97a";
+                        var node = ""
+                        if (response.code === 200006) {
+                            node = document.createTextNode(response.message)
+                        } else {
+                            node = document.createTextNode(response.message);
+                        }
+                        para.appendChild(node);
+                        setTimeout(function () {
+                            para.parentNode.removeChild(para)
+                        }, 3000)
+                    }
+                }
+            })
+        }
+    </script>
+    <script>
         var accountInfo = JSON.parse(localStorage.getItem('accountInfo')) ?? [];
         if(accountInfo.length > 0) {
             for(let i=0;i<accountInfo.length;i++) {
@@ -2142,21 +2188,25 @@
                 document.getElementById("accounts").appendChild(option);
             }
         }
-        var i = accountInfo.length;
+        //var i = accountInfo.length;
         function addAccount() {
+            const account = [];
+            const accountName = document.getElementById("accountName").value;
             const authorizationValue = document.getElementById("authorization").value;
             const apikeyValue = document.getElementById("apiKey").value;
             const secretkeyValue = document.getElementById("secretKey").value;
-            i++;
-            console.log("test i", i);
-            localStorage.setItem("account" + i + "authorization", authorizationValue);
-            localStorage.setItem("account" + i + "apikey", apikeyValue);
-            localStorage.setItem("account" + i + "secretkey", secretkeyValue);
-            if(authorizationValue && apikeyValue && secretkeyValue) {
+            //i++;
+            //console.log("test i", i);
+            //localStorage.setItem("account" + i + "authorization", authorizationValue);
+            //localStorage.setItem("account" + i + "apikey", apikeyValue);
+            //localStorage.setItem("account" + i + "secretkey", secretkeyValue);
+            if(accountName && authorizationValue && apikeyValue && secretkeyValue) {
                 const option = document.createElement("option");
-                option.text = "Account" + i;
-                option.value = "account" + i;
+                option.text = accountName;
+                option.value = accountName;
                 document.getElementById("accounts").appendChild(option);
+                account.push({name: accountName, authorization: authorizationValue, apikey: apikeyValue, secretkey: secretkeyValue});
+                localStorage.setItem(accountName, JSON.stringify(account));
                 accountInfo.push({text: option.text, value: option.value});
                 localStorage.setItem('accountInfo', JSON.stringify(accountInfo));
             } else {
@@ -2180,9 +2230,10 @@
     <script>
         function sendData(quantity, side) {
             const account = document.getElementById("accounts").value;
-            const authorizationValue = localStorage.getItem(account + "authorization");
-            const apikeyValue = localStorage.getItem(account + "apikey");
-            const secretkeyValue = localStorage.getItem(account + "secretkey");
+            const authorizationValue = JSON.parse(localStorage.getItem(account))[0].authorization;
+            const apikeyValue = JSON.parse(localStorage.getItem(account))[0].apikey;
+            const secretkeyValue = JSON.parse(localStorage.getItem(account))[0].secretkey;
+            console.log("mytest", account, authorizationValue, apikeyValue, secretkeyValue);
             const leverage = document.getElementById("leverage").value;
             if ($('#pairs option:selected').text() != "Select Pair" && authorizationValue && apikeyValue && secretkeyValue && leverage) {
                 $.ajax({
@@ -2250,9 +2301,10 @@
     <script>
         function reverse() {
             const account = document.getElementById("accounts").value;
-            const authorizationValue = localStorage.getItem(account + "authorization");
-            const apikeyValue = localStorage.getItem(account + "apikey");
-            const secretkeyValue = localStorage.getItem(account + "secretkey");
+            con
+            const authorizationValue = JSON.parse(localStorage.getItem(account))[0].authorization;
+            const apikeyValue = JSON.parse(localStorage.getItem(account))[0].apikey;
+            const secretkeyValue = JSON.parse(localStorage.getItem(account))[0].secretkey;
             $.ajax({
                 url: '/reverse',
                 type: 'POST',
