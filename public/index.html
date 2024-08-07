@@ -2279,7 +2279,7 @@
                 document.getElementById("response").style.display = "block";
                 const para = document.createElement("P");
                 para.style.background = "#ef3d3d";
-                const node = document.createTextNode("Please enter required fields.");
+                const node = document.createTextNode("Balance is not enough to create order.");
                 para.appendChild(node);
                 document.getElementById("response").appendChild(para);
                 if (document.getElementById("pairs").value.toString() === "Select Pair") {
@@ -2302,8 +2302,8 @@
     </script>
     <script>
         function reverse() {
-            const account = document.getElementById("accounts").value;
-            con
+            alert("here");
+            const account = document.getElementById("accounts").value;        
             const authorizationValue = JSON.parse(localStorage.getItem(account))[0].authorization;
             const apikeyValue = JSON.parse(localStorage.getItem(account))[0].apikey;
             const secretkeyValue = JSON.parse(localStorage.getItem(account))[0].secretkey;
