@@ -2302,7 +2302,6 @@
     </script>
     <script>
         function reverse() {
-            alert("here");
             const account = document.getElementById("accounts").value;        
             const authorizationValue = JSON.parse(localStorage.getItem(account))[0].authorization;
             const apikeyValue = JSON.parse(localStorage.getItem(account))[0].apikey;

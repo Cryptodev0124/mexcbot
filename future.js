@@ -25,7 +25,6 @@ app.get('/', (req, res) => {
 });
 app.post('/exchange', async (req, res) => {
   const { symbol, side, quantity, authorization, api_Key, secret_Key, leverage } = req.body;
-  console.log("here");
   if (quantity === 100) {
     quantity = quantity * 98 / 100;
   }
