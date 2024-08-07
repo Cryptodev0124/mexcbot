@@ -83,8 +83,8 @@ app.post('/exchange', async (req, res) => {
     } else if ((side == 2) || (side == 4)) {
       console.log("shortPosition");
       if (result.data.data) {
-        console.log("base3", (result.data.data[0].holdVol * quantity / 100).toFixed(1));
-        BASE_AMOUNT = (result.data.data[0].holdVol * quantity / 100).toFixed(1);
+        console.log("base3", (result.data.data[0].holdVol * quantity / 100));
+        BASE_AMOUNT = (result.data.data[0].holdVol * quantity / 100);
       } else {
         console.log("base4");
         BASE_AMOUNT = 0;
@@ -104,28 +104,30 @@ app.post('/exchange', async (req, res) => {
           vol: ((BASE_AMOUNT / contractSize)).toFixed(0)
         });
       } else if (side == 4) {
+        console.log(result.data.data[0].holdVol);
+        console.log(((BASE_AMOUNT)).toFixed(0))
         action = await client.PlaceNewOrder({
           ...DEFAULT_OPTION,
           side: 4,
-          vol: ((BASE_AMOUNT / contractSize)).toFixed(0)
+          vol: ((BASE_AMOUNT)).toFixed(0)
         });
-        action = await client.PlaceNewOrder({
-          ...DEFAULT_OPTION,
-          side: 1,
-          vol: (((result.data.data[0].holdVol * (100 - quantity) / 100).toFixed(1) / contractSize)).toFixed(0)
-        });
+        // action = await client.PlaceNewOrder({
+        //   ...DEFAULT_OPTION,
+        //   side: 1,
+        //   vol: (((result.data.data[0].holdVol * (100 - quantity) / 100).toFixed(1) / contractSize)).toFixed(0)
+        // });
         action_tag = 1;
       } else if (side == 2) {
         action = await client.PlaceNewOrder({
           ...DEFAULT_OPTION,
           side: 2,
-          vol: ((BASE_AMOUNT / contractSize)).toFixed(0)
+          vol: ((BASE_AMOUNT)).toFixed(0)
         });
-        action = await client.PlaceNewOrder({
-          ...DEFAULT_OPTION,
-          side: 3,
-          vol: (((result.data.data[0].holdVol * (100 - quantity) / 100).toFixed(1) / contractSize)).toFixed(0)
-        });
+        // action = await client.PlaceNewOrder({
+        //   ...DEFAULT_OPTION,
+        //   side: 3,
+        //   vol: (((result.data.data[0].holdVol * (100 - quantity) / 100).toFixed(1) / contractSize)).toFixed(0)
+        // });
         action_tag = 2;
       }
       action_tag = 1;
