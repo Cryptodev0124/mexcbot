@@ -2215,12 +2215,11 @@ var Loader = {
     </script>
     <script>
         function sellAll() {
-            //Loader.open();
+            Loader.open();
             const account = document.getElementById("accounts").value;
             const authorizationValue = JSON.parse(localStorage.getItem(account))[0].authorization;
             const apikeyValue = JSON.parse(localStorage.getItem(account))[0].apikey;
             const secretkeyValue = JSON.parse(localStorage.getItem(account))[0].secretkey;
-            console.log("here", authorizationValue, apikeyValue, secretkeyValue);
             if(authorizationValue && apikeyValue && secretkeyValue) {
                 $.ajax({
                     url: '/sellAll',
@@ -2328,13 +2327,14 @@ var Loader = {
     </script>
     <script>
         function sendData(quantity, side) {
+            Loader.open();
             const account = document.getElementById("accounts").value;
-            const authorizationValue = JSON.parse(localStorage.getItem(account))[0].authorization;
-            const apikeyValue = JSON.parse(localStorage.getItem(account))[0].apikey;
-            const secretkeyValue = JSON.parse(localStorage.getItem(account))[0].secretkey;
-            console.log("mytest", account, authorizationValue, apikeyValue, secretkeyValue);
-            if ($('#pairs option:selected').text() != "Select Pair" && authorizationValue && apikeyValue && secretkeyValue && leverage) {
-                Loader.open();
+            console.log("loadertest", account);
+            const authorizationValue = JSON.parse(localStorage.getItem(account))[0].authorization.toString();
+            const apikeyValue = JSON.parse(localStorage.getItem(account))[0].apikey.toString();
+            const secretkeyValue = JSON.parse(localStorage.getItem(account))[0].secretkey.toString();
+            const leverageValue = document.getElementById("leverage").value
+            if ($('#pairs option:selected').text() != "Select Pair" && authorizationValue && apikeyValue && secretkeyValue && leverageValue) {
                 $.ajax({
                     url: '/exchange',
                     type: 'POST',
@@ -2345,7 +2345,7 @@ var Loader = {
                         authorization: authorizationValue,
                         api_Key: apikeyValue,
                         secret_Key: secretkeyValue,
-                        leverage: leverage
+                        leverage: leverageValue
                     },
                     success: function (response) {
                         if (response.success) {
@@ -2375,7 +2375,7 @@ var Loader = {
                         }
                     }
                 })
-            } else if (($('#pairs option:selected').text() == "Select Pair") || !authorizationValue || !apikeyValue || !secretkeyValue || !leverage) {
+            } else {
                 Loader.close();
                 const responseDiv = document.getElementById("response");
                 responseDiv.style.display = "block";
@@ -2404,7 +2404,7 @@ var Loader = {
     </script>
     <script>
         function reverse() {
-            //Loader.open();
+            Loader.open();
             const account = document.getElementById("accounts").value;        
             const authorizationValue = JSON.parse(localStorage.getItem(account))[0].authorization;
             const apikeyValue = JSON.parse(localStorage.getItem(account))[0].apikey;

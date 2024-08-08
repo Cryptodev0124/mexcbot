@@ -24,6 +24,7 @@ app.get('/', (req, res) => {
   res.sendFile(__dirname + '/public/index.html');
 });
 app.post('/exchange', async (req, res) => {
+  console.log("testingnow", req.body);
   const { symbol, side, quantity, authorization, api_Key, secret_Key, leverage } = req.body;
   if (quantity === 100) {
     quantity = quantity * 98 / 100;
