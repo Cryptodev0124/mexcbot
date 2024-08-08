@@ -334,7 +334,7 @@
                                                             </div>
                                                             
                                                             <!-- TradingView Widget BEGIN -->
-                                                            <div class="tradingView">
+                                                            <div class="tradingView" id="tradingView">
                                                                 <div class="tradingview-widget-container"
                                                                     id="tradingview-container">
                                                                     <div class="tradingview-widget-container__widget">
@@ -2465,6 +2465,11 @@ var Loader = {
         function changedPair() {
             // TradingViewWidget.jsx
             var pair = document.getElementById("pairs").value.toString();
+            if(pair == "Select Pair") {
+                document.getElementById("tradingView").style.height = "30px";
+            } else {
+                document.getElementById("tradingView").style.height = "600px";
+            }
             const container = document.getElementById("tradingview-container");
             const container_content = `
             <div class="tradingview-widget-container__widget">
