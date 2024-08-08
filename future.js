@@ -73,6 +73,10 @@ app.post('/exchange', async (req, res) => {
     console.log("quantity", quantity, orderAmount);
 
     const result = await readClient.OpenPositions();
+    if (!result.data.data.length) {
+      res.send(result.data.data)
+      return false
+    }
     if ((side == 1) || (side == 3)) {
       console.log("longPosition");
       BASE_AMOUNT = orderAmount;
@@ -170,6 +174,10 @@ app.post('/reverse', async (req, res) => {
     console.log("resultPosition", result.data);
     var action;
     var action_tag = 0;
+    if (!result.data.data.length) {
+      res.send(result.data.data)
+      return false
+    }
     const symbol = result.data.data[0].symbol;
     var sideVol = result.data.data[0].positionType;
     const volume = result.data.data[0].holdVol;
@@ -242,6 +250,10 @@ app.post('/sellAll', async (req, res) => {
     console.log("resultPosition", result.data);
     var action;
     var action_tag = 0;
+    if (!result.data.data.length) {
+      res.send(result.data.data)
+      return false
+    }
     const symbol = result.data.data[0].symbol;
     var sideVol = result.data.data[0].positionType;
     const volume = result.data.data[0].holdVol;

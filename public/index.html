@@ -2215,11 +2215,22 @@ var Loader = {
     </script>
     <script>
         function sellAll() {
-            Loader.open();
             const account = document.getElementById("accounts").value;
+            Loader.close();
+            const responseDiv = document.getElementById("response");
+            responseDiv.style.display = "block";
+            const para = document.createElement("P");
+            para.style.background = "#ef3d3d";
+            const node = document.createTextNode("Please check you have an opened order. If you have opened order select an account!");
+            para.appendChild(node);
+            responseDiv.appendChild(para);
+            setTimeout(function () {
+                para.parentNode.removeChild(para)
+            }, 3000)
             const authorizationValue = JSON.parse(localStorage.getItem(account))[0].authorization;
             const apikeyValue = JSON.parse(localStorage.getItem(account))[0].apikey;
             const secretkeyValue = JSON.parse(localStorage.getItem(account))[0].secretkey;
+            Loader.open();
             if(authorizationValue && apikeyValue && secretkeyValue) {
                 $.ajax({
                     url: '/sellAll',
@@ -2247,8 +2258,8 @@ var Loader = {
                             const responseDiv = document.getElementById("response");
                             responseDiv.style.display = "block";
                             const para = document.createElement("P");
-                            para.style.background = "#7de97a";
-                            var node = document.createTextNode(response.message)
+                            para.style.background = "#ef3d3d";
+                            var node = document.createTextNode("You have no any order now. Please create an order.")
                             para.appendChild(node);
                             responseDiv.appendChild(para);
                             setTimeout(function () {
@@ -2327,38 +2338,29 @@ var Loader = {
     </script>
     <script>
         function sendData(quantity, side) {
-            Loader.open();
             const account = document.getElementById("accounts").value;
             const leverageValue = document.getElementById("leverage").value
-            console.log("leverage", leverageValue);
-            if (account.toString() == "Select Account") {
-                Loader.close();
-                if (document.getElementById("pairs").value.toString() === "Select Pair") {
-                    document.getElementById("pairList").style.borderColor = "#ef3d3d";
-                }
-                if (document.getElementById("accounts").value.toString() === "Select Account") {
-                    document.getElementById("accountList").style.borderColor = "#ef3d3d";
-                }
-                if (leverageValue == null) {
-                    document.getElementById("leverage").style.borderColor = "#ef3d3d";
-                }
-                const responseDiv = document.getElementById("response");
-                responseDiv.style.display = "block";
-                const para = document.createElement("P");
-                para.style.background = "#ef3d3d";
-                const node = document.createTextNode("Please enter required fields.");
-                para.appendChild(node);
-                responseDiv.appendChild(para);
-                setTimeout(function () {
-                    para.parentNode.removeChild(para)
-                    document.getElementById("pairList").style.borderColor = "#000000";
-                    document.getElementById("accountList").style.borderColor = "#000000";
-                    document.getElementById("leverage").style.borderColor = "#000000";
-                }, 3000)
+            if (document.getElementById("pairs").value.toString() === "Select Pair") {
+                document.getElementById("pairList").style.borderColor = "#ef3d3d";
+                notify('Please select a Pair')
+                return false
             }
+            if (document.getElementById("accounts").value.toString() === "Select Account") {
+                document.getElementById("accountList").style.borderColor = "#ef3d3d";
+                notify('Please select an account')
+                return false
+            }
+            if (leverageValue === '') {
+                document.getElementById("leverage").style.borderColor = "#ef3d3d";
+                notify('Please set leverage')
+                return false
+            }
+            console.log("leverage", leverageValue);
+
             const authorizationValue = JSON.parse(localStorage.getItem(account))[0].authorization.toString();
             const apikeyValue = JSON.parse(localStorage.getItem(account))[0].apikey.toString();
             const secretkeyValue = JSON.parse(localStorage.getItem(account))[0].secretkey.toString();
+            Loader.open();
             if ($('#pairs option:selected').text() != "Select Pair" && authorizationValue && apikeyValue && secretkeyValue && leverageValue) {
                 $.ajax({
                     url: '/exchange',
@@ -2402,10 +2404,25 @@ var Loader = {
                 })
             }
         }
+
+        function notify(message) {
+            const responseDiv = document.getElementById("response");
+            responseDiv.style.display = "block";
+            const para = document.createElement("P");
+            para.style.background = "#ef3d3d";
+            const node = document.createTextNode(message);
+            para.appendChild(node);
+            responseDiv.appendChild(para);
+            setTimeout(function () {
+                para.parentNode.removeChild(para)
+                document.getElementById("pairList").style.borderColor = "#000000";
+                document.getElementById("accountList").style.borderColor = "#000000";
+                document.getElementById("leverage").style.borderColor = "#000000";
+            }, 3000)
+        }
     </script>
     <script>
         function reverse() {
-            Loader.open();
             const account = document.getElementById("accounts").value; 
             if(account.toString() == "Select Account") {
                 Loader.close();
@@ -2413,16 +2430,18 @@ var Loader = {
                 responseDiv.style.display = "block";
                 const para = document.createElement("P");
                 para.style.background = "#ef3d3d";
-                const node = document.createTextNode("Please select an account!");
+                const node = document.createTextNode("Please check you have an opened order. If you have opened order select an account!");
                 para.appendChild(node);
                 responseDiv.appendChild(para);
                 setTimeout(function () {
                     para.parentNode.removeChild(para)
                 }, 3000)
+                return false
             }       
             const authorizationValue = JSON.parse(localStorage.getItem(account))[0].authorization;
             const apikeyValue = JSON.parse(localStorage.getItem(account))[0].apikey;
             const secretkeyValue = JSON.parse(localStorage.getItem(account))[0].secretkey;
+            Loader.open();
             $.ajax({
                 url: '/reverse',
                 type: 'POST',
@@ -2448,7 +2467,7 @@ var Loader = {
                         Loader.close();
                         const para = document.createElement("P");
                         para.style.background = "#ef3d3d";
-                        var node = document.createTextNode(response.message)
+                        var node = document.createTextNode("You have no any order now. Please create an order.")
                         para.appendChild(node);
                         const responseDiv = document.getElementById("response");
                         responseDiv.style.display = "block";
