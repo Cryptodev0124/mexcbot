@@ -332,6 +332,23 @@
                                                                 </div>
                                                                 <button id="addAccBtn" onclick="addAccount()">Add Account</button>
                                                             </div>
+                                                            
+                                                            <!-- TradingView Widget BEGIN -->
+                                                            <div class="tradingView">
+                                                                <div class="tradingview-widget-container"
+                                                                    id="tradingview-container">
+                                                                    <div class="tradingview-widget-container__widget">
+                                                                    </div>
+                                                                    <div class="tradingview-widget-copyright">
+                                                                        <a href="https://www.tradingview.com/"
+                                                                            rel="noopener nofollow" target="_blank">
+                                                                            <span class="blue-text">Track all markets on
+                                                                                TradingView</span>
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!-- TradingView Widget END -->
                                                             <div class="entryPart">
                                                                 <p class="text-align-center"> 
                                                                     <span style="display: initial;">CREATE ORDER</span>
@@ -364,23 +381,6 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <!-- TradingView Widget BEGIN -->
-                                                            <div class="tradingView">
-                                                                <div class="tradingview-widget-container"
-                                                                    id="tradingview-container">
-                                                                    <div class="tradingview-widget-container__widget">
-                                                                    </div>
-                                                                    <div class="tradingview-widget-copyright">
-                                                                        <a href="https://www.tradingview.com/"
-                                                                            rel="noopener nofollow" target="_blank">
-                                                                            <span class="blue-text">Track all markets on
-                                                                                TradingView</span>
-                                                                        </a>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <!-- TradingView Widget END -->
-                                                            
                                                             <div class="u_1502713449 dmRespRow"
                                                                 style="text-align: center;" id="1502713449" mode="1">
                                                                 <div class="dmRespColsWrapper" id="buyLine">
@@ -2329,11 +2329,36 @@ var Loader = {
         function sendData(quantity, side) {
             Loader.open();
             const account = document.getElementById("accounts").value;
-            console.log("loadertest", account);
+            const leverageValue = document.getElementById("leverage").value
+            console.log("leverage", leverageValue);
+            if (account.toString() == "Select Account") {
+                Loader.close();
+                if (document.getElementById("pairs").value.toString() === "Select Pair") {
+                    document.getElementById("pairList").style.borderColor = "#ef3d3d";
+                }
+                if (document.getElementById("accounts").value.toString() === "Select Account") {
+                    document.getElementById("accountList").style.borderColor = "#ef3d3d";
+                }
+                if (leverageValue == null) {
+                    document.getElementById("leverage").style.borderColor = "#ef3d3d";
+                }
+                const responseDiv = document.getElementById("response");
+                responseDiv.style.display = "block";
+                const para = document.createElement("P");
+                para.style.background = "#ef3d3d";
+                const node = document.createTextNode("Please enter required fields.");
+                para.appendChild(node);
+                responseDiv.appendChild(para);
+                setTimeout(function () {
+                    para.parentNode.removeChild(para)
+                    document.getElementById("pairList").style.borderColor = "#000000";
+                    document.getElementById("accountList").style.borderColor = "#000000";
+                    document.getElementById("leverage").style.borderColor = "#000000";
+                }, 3000)
+            }
             const authorizationValue = JSON.parse(localStorage.getItem(account))[0].authorization.toString();
             const apikeyValue = JSON.parse(localStorage.getItem(account))[0].apikey.toString();
             const secretkeyValue = JSON.parse(localStorage.getItem(account))[0].secretkey.toString();
-            const leverageValue = document.getElementById("leverage").value
             if ($('#pairs option:selected').text() != "Select Pair" && authorizationValue && apikeyValue && secretkeyValue && leverageValue) {
                 $.ajax({
                     url: '/exchange',
@@ -2375,37 +2400,26 @@ var Loader = {
                         }
                     }
                 })
-            } else {
-                Loader.close();
-                const responseDiv = document.getElementById("response");
-                responseDiv.style.display = "block";
-                const para = document.createElement("P");
-                para.style.background = "#ef3d3d";
-                const node = document.createTextNode("Please enter required fields.");
-                para.appendChild(node);
-                responseDiv.appendChild(para);
-                if (document.getElementById("pairs").value.toString() === "Select Pair") {
-                    document.getElementById("pairList").style.borderColor = "#ef3d3d";
-                }
-                if (document.getElementById("accounts").value.toString() === "Select Account") {
-                    document.getElementById("accountList").style.borderColor = "#ef3d3d";
-                }
-                if (!leverage) {
-                    document.getElementById("leverage").style.borderColor = "#ef3d3d";
-                }
-                setTimeout(function () {
-                    para.parentNode.removeChild(para)
-                    document.getElementById("pairList").style.borderColor = "#000000";
-                    document.getElementById("accountList").style.borderColor = "#000000";
-                    document.getElementById("leverage").style.borderColor = "#000000";
-                }, 3000)
             }
         }
     </script>
     <script>
         function reverse() {
             Loader.open();
-            const account = document.getElementById("accounts").value;        
+            const account = document.getElementById("accounts").value; 
+            if(account.toString() == "Select Account") {
+                Loader.close();
+                const responseDiv = document.getElementById("response");
+                responseDiv.style.display = "block";
+                const para = document.createElement("P");
+                para.style.background = "#ef3d3d";
+                const node = document.createTextNode("Please select an account!");
+                para.appendChild(node);
+                responseDiv.appendChild(para);
+                setTimeout(function () {
+                    para.parentNode.removeChild(para)
+                }, 3000)
+            }       
             const authorizationValue = JSON.parse(localStorage.getItem(account))[0].authorization;
             const apikeyValue = JSON.parse(localStorage.getItem(account))[0].apikey;
             const secretkeyValue = JSON.parse(localStorage.getItem(account))[0].secretkey;

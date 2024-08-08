@@ -66,20 +66,16 @@ app.post('/exchange', async (req, res) => {
     const info = await readClient.AssetByCurrency({ currency: "USDT" });
     const availableBalance = info.data.data.availableBalance;
     console.log("availableBalance", availableBalance);
-    const orderAmount = availableBalance * quantity * LEAVERAGE_MULTIPLIER / latestPrice / 100;
+    const orderBalance = availableBalance * LEAVERAGE_MULTIPLIER;
+    const maxBalance = Math.min(maxAmount * latestPrice, orderBalance);
+    const orderAmount = maxBalance * quantity / latestPrice / 100;
 
     console.log("quantity", quantity, orderAmount);
 
     const result = await readClient.OpenPositions();
     if ((side == 1) || (side == 3)) {
       console.log("longPosition");
-      if (orderAmount >= maxAmount) {
-        console.log("base1");
-        BASE_AMOUNT = maxAmount;
-      } else {
-        console.log("base2");
-        BASE_AMOUNT = orderAmount;
-      }
+      BASE_AMOUNT = orderAmount;
     } else if ((side == 2) || (side == 4)) {
       console.log("shortPosition");
       if (result.data.data) {

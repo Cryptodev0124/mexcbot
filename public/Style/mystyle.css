@@ -62,7 +62,7 @@
 
     .pairList {
         margin-right: 0px !important;
-        margin-bottom: 15px;
+        /* margin-bottom: 15px; */
     }
 
     #apiKey {
