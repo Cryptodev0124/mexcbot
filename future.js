@@ -73,9 +73,8 @@ app.post('/exchange', async (req, res) => {
     console.log("quantity", quantity, orderAmount);
 
     const result = await readClient.OpenPositions();
-    if (!result.data.data.length) {
-      res.send(result.data.data)
-      return false
+    if (result.data.data = []) {
+      
     }
     if ((side == 1) || (side == 3)) {
       console.log("longPosition");
@@ -87,7 +86,9 @@ app.post('/exchange', async (req, res) => {
         BASE_AMOUNT = (result.data.data[0].holdVol * quantity / 100);
       } else {
         console.log("base4");
+        res.send(result.data.data)
         BASE_AMOUNT = 0;
+        return false
       }
     }
     console.log("baseAmount", side, orderAmount, BASE_AMOUNT);
