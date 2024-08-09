@@ -73,9 +73,7 @@ app.post('/exchange', async (req, res) => {
     console.log("quantity", quantity, orderAmount);
 
     const result = await readClient.OpenPositions();
-    if (result.data.data = []) {
-      
-    }
+    
     if ((side == 1) || (side == 3)) {
       console.log("longPosition");
       BASE_AMOUNT = orderAmount;
