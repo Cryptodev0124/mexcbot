@@ -70,15 +70,11 @@ app.post('/exchange', async (req, res) => {
     const maxBalance = Math.min(maxAmount * latestPrice, orderBalance);
     const orderAmount = maxBalance * quantity / latestPrice / 100;
 
-    console.log("quantity", quantity, orderAmount);
-
     const result = await readClient.OpenPositions();
     
     if ((side == 1) || (side == 3)) {
-      console.log("longPosition");
       BASE_AMOUNT = orderAmount;
     } else if ((side == 2) || (side == 4)) {
-      console.log("shortPosition");
       if (result.data.data) {
         console.log("base3", (result.data.data[0].holdVol * quantity / 100));
         BASE_AMOUNT = (result.data.data[0].holdVol * quantity / 100);
@@ -94,7 +90,6 @@ app.post('/exchange', async (req, res) => {
     isReady = false;
     var action;
     var action_tag = 0;
-    console.log("success", result.data);
     if (result.data.success) {
       if ((side == 1) || (side == 3)) {
         action = await client.PlaceNewOrder({
