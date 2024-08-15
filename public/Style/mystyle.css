@@ -146,6 +146,13 @@
     margin-right: 4px;
     padding: 5px;
     border: 1px solid;
+    display: flex;
+    flex-direction: column;
+}
+
+.accountLabel {
+  display: flex;
+  justify-content: space-between;
 }
 
 /*loader*/
