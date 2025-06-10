@@ -9,7 +9,7 @@ class APIBase {
     this.baseURL = baseURL
     this.logger = logger || defaultLogger
   }
-  //V3
+  //version 3
   publicRequest(method, path, params = {}) {
     params = removeEmptyValue(params)
     params = buildQueryString(params)
