@@ -3,6 +3,7 @@ const Future = require('../../src/future')
 require('dotenv').config()
 const tradingviewInit = require('../../src/helpers/tradingview');
 const { writeToStorage, readFromStorage } = require('../../src/helpers/fs');
+//change api keys
 const apiKey = process.env.API_KEY
 const apiSecret = process.env.SECRET_KEY
 const baseUrl = 'https://futures.mexc.com/';
